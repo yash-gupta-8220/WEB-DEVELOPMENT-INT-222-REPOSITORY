@@ -1,0 +1,127 @@
+[7:53 PM, 3/28/2026] YASH: </html>
+[7:56 PM, 3/28/2026] YASH: <!DOCTYPE html>
+<html>
+<head>
+    <title>Idea Repository</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        .form-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+            margin-bottom: 20px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #4facfe;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #007bff;
+        }
+
+        .idea-card {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0px 0px 5px gray;
+        }
+
+        .domain {
+            color: #007bff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>💡 Idea Collaboration Platform</h1>
+
+<div class="container">
+
+    <div class="form-box">
+        <input id="title" placeholder="Idea Title">
+        <input id="domain" placeholder="Domain (AI, Web, Startup)">
+        <textarea id="desc" placeholder="Describe your idea..."></textarea>
+        <button onclick="addIdea()">🚀 Submit Idea</button>
+    </div>
+
+    <h2 style="color:white;">All Ideas</h2>
+    <div id="list"></div>
+
+</div>
+
+<script>
+async function addIdea() {
+    const idea = {
+        title: document.getElementById("title").value,
+        domain: document.getElementById("domain").value,
+        description: document.getElementById("desc").value
+    };
+
+    await fetch("/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(idea)
+    });
+
+    loadIdeas();
+}
+
+async function loadIdeas() {
+    const res = await fetch("/ideas");
+    const data = await res.json();
+
+    let html = "";
+    data.forEach(i => {
+        html += `
+            <div class="idea-card">
+                <h3>${i.title}</h3>
+                <p class="domain">${i.domain}</p>
+                <p>${i.description}</p>
+            </div>
+        `;
+    });
+
+    document.getElementById("list").innerHTML = html;
+}
+
+loadIdeas();
+</script>
+
+</body>
+</html>
