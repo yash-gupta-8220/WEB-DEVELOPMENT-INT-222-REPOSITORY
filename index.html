@@ -65,7 +65,122 @@
             color: #007bff;
             font-weight: bold;
         }
-    </style>
+        @keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ✨ Glow effect on heading */
+h1 {
+  text-shadow: 0 0 10px rgba(255,255,255,0.6);
+}
+
+/* 🎯 Input focus effect */
+input:focus, textarea:focus {
+  box-shadow: 0 0 10px #00eaff;
+  transform: scale(1.02);
+  transition: 0.3s;
+}
+
+/* 🚀 Button animation */
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  background: rgba(255,255,255,0.2);
+  top: 0;
+  left: 0;
+  transition: 0.4s;
+}
+
+button:hover::after {
+  width: 100%;
+}
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+
+  background-image: url("https://images.unsplash.com/photo-1519389950473-47ba0277781c"); /* coding workspace */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  min-height: 100vh;
+  color: white;
+}
+
+/* Dark overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: -1;
+}
+
+navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-right {
+  display: flex;
+  gap: 20px;
+}
+.dropdown-menu {
+  background: rgba(0,0,0,0.9);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,255,255,0.5);
+}
+dropdown-menu div {
+  padding: 10px;
+  transition: 0.3s;
+}
+
+/* Hover */
+.dropdown-menu div:hover {
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+  transform: translateX(5px);
+  box-shadow: 0 0 10px cyan;
+}
+.nav-right span {
+  position: relative;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+/* Hover effect */
+.nav-right span:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}
+
+/* Underline animation */
+.nav-right span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: cyan;
+  transition: 0.3s;
+}
+
+.nav-right span:hover::after {
+  width: 100%;
+}
+</style>
+    
 </head>
 <body>
 
