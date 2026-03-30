@@ -210,21 +210,7 @@ dropdown-menu div {
 </div>
 
 <script>
-async function submitIdea() {
-  const title = document.getElementById("title").value;
 
-  const res = await fetch("/add", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ title })
-  });
-
-  if (res.ok) {
-    loadIdeas();
-  }
-}
 async function addIdea() {
     const idea = {
         title: document.getElementById("title").value,
