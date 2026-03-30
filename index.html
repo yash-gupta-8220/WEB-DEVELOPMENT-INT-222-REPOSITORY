@@ -180,6 +180,25 @@ dropdown-menu div {
   width: 100%;
 }
 </style>
+    div class="navbar">
+  <div class="logo">💡 IdeaHub</div>
+
+  <div class="nav-right">
+    <span onclick="setActive(this)">Ideas</span>
+    <span onclick="setActive(this)">Collaborate</span>
+
+    <!-- Domain Dropdown -->
+    <div class="dropdown">
+      <span onclick="toggleDropdown(this)">Domain ⬇</span>
+
+      <div class="dropdown-menu">
+        <div onclick="selectDomain('Education')">🎓 Education</div>
+        <div onclick="selectDomain('AI')">🤖 AI</div>
+        <div onclick="selectDomain('Web')">🌐 Web</div>
+        <div onclick="selectDomain('App')">📱 App</div>
+        <div onclick="selectDomain('Cyber')">🔐 Cyber</div>
+      </div>
+    </div>
     
 </head>
 <body>
