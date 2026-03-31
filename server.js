@@ -21,6 +21,14 @@ app.get("/ideas", (req, res) => {
     res.json(ideas);
 });
 
-app.listen(3000, () => {
-    console.log("Server running at http://localhost:3000");
+// get ideas
+app.get("/ideas", (req, res) => {
+  res.json(ideas);
 });
+
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});;
