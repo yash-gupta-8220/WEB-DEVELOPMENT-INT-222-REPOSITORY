@@ -195,6 +195,22 @@ navbar {
   cursor: pointer;
   transition: 0.3s;
 }
+     /* ✨ Light hover */
+.dropdown-menu div:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* 🔥 Selected (Glass Glow Effect) */
+.dropdown-menu div.active {
+  background: rgba(0, 198, 255, 0.2);
+  backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(0,198,255,0.4);
+  box-shadow: 0 0 15px #00c6ff, 0 0 30px #00c6ff;
+
+  border-radius: 10px;
+  color: #00c6ff;
+}
 dropdown-menu div {
   padding: 10px;
   transition: 0.3s;
