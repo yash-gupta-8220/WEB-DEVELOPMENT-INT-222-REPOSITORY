@@ -301,6 +301,61 @@ dropdown-menu div {
 .form-box:hover {
   box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
 }
+form-box {
+  width: 350px;
+  padding: 25px;
+
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+
+  animation: glassEntry 1.2s ease-out;
+  transition: all 0.3s ease;
+}
+
+/* ===== HOVER EFFECT ===== */
+.form-box:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== INPUT FIELDS ===== */
+.form-box input,
+.form-box textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+
+  border: none;
+  outline: none;
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+
+  font-size: 14px;
+}
+
+/* ===== PLACEHOLDER ===== */
+.form-box input::placeholder,
+.form-box textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== BUTTON ===== */
+.form-box button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+
+  border: none;
+  border-radius: 12px;
 
 </style>
  <div class="extra-box">
