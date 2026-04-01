@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Research Journal Hub</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #020617;
+      color: white;
+      margin: 0;
+    }
+
+    header {
+      background: #3b82f6;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      width: 90%;
+      margin: auto;
+    }
+
+    .paper {
+      background: #1e293b;
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .paper img {
+      width: 180px;
+      border-radius: 10px;
+    }
+
+    .content {
+      text-align: left;
+    }
+
+    .content h2 {
+      color: #38bdf8;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: gray;
+    }
+
+    .tag {
+      background: #22c55e;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 12px;
+      margin-right: 5px;
+    }
+
+    .form-box {
+      background: #1e293b;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    input, textarea {
+      width: 90%;
+      margin: 5px;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      padding: 10px;
+      margin: 5px;
+      background: #3b82f6;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .back-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background: #38bdf8;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>📄 Research Journal Hub</header>
+
+<div class="container">
+
+  <!-- ADD RESEARCH -->
+  <div class="form-box">
+    <h3>Add Research Paper</h3>
+    <input id="title" placeholder="Research Title">
+    <input id="domain" placeholder="Field (AI, Cyber, Web)">
+    <textarea id="desc" placeholder="Abstract / Summary"></textarea>
+    <button onclick="addResearch()">Submit</button>
+  </div>
+
+  <!-- LIST -->
+  <div id="list"></div>
+
+  <button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+</div>
+
+<script>
+
+// ADD
+async function addResearch() {
+  const idea = {
+    title: document.getElementById("title").value,
+    domain: document.getElementById("domain").value,
+    description: document.getElementById("desc").value,
+    type: "research",
+    time: new Date().toLocaleString()
+  };
+
+  await fetch("/add", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(idea)
+  });
+
+  load();
+}
+
+// LOAD
+async function load() {
+  const res = await fetch("/ideas");
+  const data = await res.json();
+
+  let html = "";
+
+  data.forEach(i => {
+    if (i.type === "research") {
+      html += `
+        <div class="paper">
+          <img src="https://source.unsplash.com/180x120/?research,technology">
+
+          <div class="content">
+            <h2>${i.title}</h2>
+
+            <span class="tag">${i.domain}</span>
+            <p class="meta">${i.time || ""}</p>
+
+            <p>
+              ${i.description}
+            </p>
+
+            <p>
+              This research contributes to modern technological advancements and explores innovative
+              solutions in the field of ${i.domain}. It can be useful for future developments and academic studies.
+            </p>
+          </div>
+        </div>
+      `;
+    }
+  });
+
+  document.getElementById("list").innerHTML = html;
+}
+
+// BACK
+function goBack() {
+  window.location.href = "/";
+}
+
+// AUTO LOAD
+window.onload = load;
+
+</script>
+
+</body>
+</html>
