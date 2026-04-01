@@ -526,18 +526,25 @@ function closeMenu() {
 function selectType(type) {
   closeMenu();
 
-  if (type === "idea") {
-    showMessage("Add your idea ✍️", "green");
-  } 
-  else if (type === "research") {
-    showMessage("Upload research journal 📄", "blue");
-  } 
-  else if (type === "image") {
-    showMessage("Upload image idea 🖼️", "purple");
-  } 
-  else if (type === "startup") {
-    showMessage("Submit startup idea 🚀", "orange");
+  // 🔥 open new pages
+  if (type === "research") {
+    window.location.href = "research.html";
+    return;
   }
+
+  else if (type === "image") {
+    window.location.href = "image.html";
+    return;
+  }
+
+  else if (type === "startup") {
+    window.location.href = "startup.html";
+    return;
+  }
+
+  // ✅ for idea (stay same page)
+  document.getElementById("typeInput").value = type;
+  document.getElementById("formSection").style.display = "block";
 }
  
 </script>
