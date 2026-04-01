@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Research Journal Hub</title>
@@ -100,7 +100,6 @@
       margin: 20px;
       background: #f97316;
     }
-
   </style>
 </head>
 
@@ -130,27 +129,27 @@
 
 <script>
 
-// 🔥 UPDATED WITH WORKING IMAGE LINKS
+// ✅ FIXED IMAGE LINKS (WORKING)
 let researches = [
   {
     title: "AI in Healthcare",
     field: "AI",
     desc: "AI is transforming healthcare with smart diagnosis systems.",
-    img: "https://images.unsplash.com/photo-1581091870622-3d3d9f0d3c6f",
+    img: "https://via.placeholder.com/400x200?text=AI+Healthcare",
     date: "2026"
   },
   {
     title: "Cyber Security Trends",
     field: "Cyber",
     desc: "Modern cyber threats and protection techniques.",
-    img: "https://images.unsplash.com/photo-1510519138101-570d1dca3d66",
+    img: "https://via.placeholder.com/400x200?text=Cyber+Security",
     date: "2025"
   },
   {
     title: "Web Development Future",
     field: "Web",
     desc: "Modern frameworks like React and AI UI.",
-    img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+    img: "https://via.placeholder.com/400x200?text=Web+Development",
     date: "2026"
   }
 ];
@@ -162,7 +161,7 @@ function displayResearch(data = researches) {
   data.forEach((r, index) => {
     html += `
       <div class="card">
-        <img src="${r.img}">
+        <img src="${r.img}" alt="research">
         <h3>${r.title}</h3>
         <p class="meta">${r.field} • ${r.date}</p>
         <p>${r.desc}</p>
@@ -189,7 +188,7 @@ function addResearch() {
     title,
     field,
     desc,
-    img: "https://images.unsplash.com/photo-1526378722484-bd91ca387e72",
+    img: "https://via.placeholder.com/400x200?text=New+Research",
     date: new Date().getFullYear()
   });
 
