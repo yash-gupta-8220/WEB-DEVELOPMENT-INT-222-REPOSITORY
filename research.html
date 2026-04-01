@@ -31,7 +31,6 @@
       width: 320px;
       margin: 20px auto;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
     input, textarea, button {
@@ -84,6 +83,8 @@
 
     .card img {
       width: 100%;
+      height: 150px;
+      object-fit: cover;
       border-radius: 10px;
     }
 
@@ -136,29 +137,50 @@
 <button class="back-btn" onclick="goBack()">⬅ Back</button>
 
 <script>
+
 let researches = [
   {
     title: "AI in Healthcare",
     field: "AI",
-    desc: "AI is transforming healthcare with smart diagnosis and predictive models.",
-    img: "https://images.unsplash.com/photo-1677442135136-760c813028c4",
+    desc: "AI is transforming healthcare with smart diagnosis systems.",
+    img: "https://source.unsplash.com/300x200/?ai",
     date: "2026"
   },
   {
     title: "Cyber Security Trends",
     field: "Cyber",
-    desc: "Zero trust and AI security systems are future of cyber protection.",
-    img: "https://images.unsplash.com/photo-1518770660439-4636190af475",
+    desc: "Modern cyber threats and AI-based security systems.",
+    img: "https://source.unsplash.com/300x200/?cyber-security",
     date: "2025"
   },
   {
-    title: "Modern Web Tech",
+    title: "Web Development Future",
     field: "Web",
-    desc: "Next.js, AI UI and serverless apps are shaping the future.",
-    img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+    desc: "Modern frameworks like React and AI UI.",
+    img: "https://source.unsplash.com/300x200/?coding",
     date: "2026"
   }
 ];
+
+// DISPLAY
+function displayResearch(data = researches) {
+  let html = "";
+
+  data.forEach((r, index) => {
+    html += `
+      <div class="card">
+        <img src="${r.img}">
+        <h3>${r.title}</h3>
+        <p class="meta">${r.field} • ${r.date}</p>
+        <p>${r.desc}</p>
+
+        <button class="like-btn" onclick="like(${index})">👍 Like</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("list").innerHTML = html;
+}
 
 // ADD
 function addResearch() {
@@ -175,32 +197,11 @@ function addResearch() {
     title,
     field,
     desc,
-    img: "https://via.placeholder.com/300",
+    img: "https://source.unsplash.com/300x200/?technology",
     date: new Date().getFullYear()
   });
 
   displayResearch();
-}
-
-// DISPLAY
-function displayResearch(data = researches) {
-  let html = "";
-
-  data.forEach((r, index) => {
-    html += `
-      <div class="card">
-        <img src="${r.img}">
-        <h3>${r.title}</h3>
-        <p class="meta">${r.field} • ${r.date}</p>
-        <p>${r.desc}</p>
-
-        <button class="like-btn" onclick="like(${index})">👍 Like</button>
-        <a href="#" style="color:#38bdf8;">Read More →</a>
-      </div>
-    `;
-  });
-
-  document.getElementById("list").innerHTML = html;
 }
 
 // SEARCH
@@ -227,6 +228,7 @@ function goBack() {
 
 // AUTO LOAD
 window.onload = displayResearch;
+
 </script>
 
 </body>
