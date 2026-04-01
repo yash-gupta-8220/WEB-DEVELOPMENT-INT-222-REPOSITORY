@@ -247,7 +247,59 @@ dropdown-menu div {
   background: cyan;
   transition: 0.3s;
 }
+.extra-box {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f5f7fa;
+  border-radius: 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.comment-input:focus {
+  border-color: #007bff;
+}
+
+.comment-btn {
+  padding: 8px 12px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.comment-btn:hover {
+  background: #218838;
+}
+
+.collab-btn {
+  padding: 8px 12px;
+  background: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.collab-btn:hover {
+  background: #e68900;
+}
 </style>
+ <div class="extra-box">
+  <input type="text" placeholder="Write a suggestion..." class="comment-input" />
+  <button class="comment-btn">Add</button>
+  <button class="collab-btn">🤝 Collaborate</button>
+</div>
     
   <div class="logo">💡 IdeaHub</div>
 
