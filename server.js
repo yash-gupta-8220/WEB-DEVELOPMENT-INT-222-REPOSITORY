@@ -1,28 +1,26 @@
 const express = require("express");
-const path = require("path");
-
 const app = express();
 
-// Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Serve frontend
+let ideas = [];
+
+// open website
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(__dirname + "/index.html");
 });
 
-// Submit idea (WORKING VERSION)
+// add idea
 app.post("/add", (req, res) => {
-    const idea = req.body;
-    console.log("Received Idea:", idea);
-
-    res.send("Idea Added Successfully");
+    ideas.push(req.body);
+    res.send("Idea Added");
 });
 
-// Port
-const PORT = process.env.PORT || 3000;
+// get ideas
+app.get("/ideas", (req, res) => {
+    res.json(ideas);
+});
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(3000, () => {
+    console.log("Server running at http://localhost:3000");
 });
