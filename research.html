@@ -6,93 +6,107 @@
   <style>
     body {
       font-family: Arial;
-      background: #020617;
-      color: white;
       margin: 0;
+      background: linear-gradient(to right, #020617, #1e293b);
+      color: white;
+      text-align: center;
     }
 
     header {
-      background: #3b82f6;
+      background: #0ea5e9;
       padding: 15px;
-      text-align: center;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
     }
 
-    .container {
-      width: 90%;
-      margin: auto;
-    }
-
-    .paper {
-      background: #1e293b;
-      margin: 20px 0;
-      padding: 15px;
-      border-radius: 10px;
-      display: flex;
-      gap: 15px;
-    }
-
-    .paper img {
-      width: 180px;
-      border-radius: 10px;
-    }
-
-    .content {
-      text-align: left;
-    }
-
-    .content h2 {
+    h2 {
+      margin-top: 20px;
       color: #38bdf8;
     }
 
-    .meta {
-      font-size: 12px;
-      color: gray;
-    }
-
-    .tag {
-      background: #22c55e;
-      padding: 3px 8px;
-      border-radius: 5px;
-      font-size: 12px;
-      margin-right: 5px;
-    }
-
+    /* FORM */
     .form-box {
       background: #1e293b;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
-      text-align: center;
+      padding: 20px;
+      width: 320px;
+      margin: 20px auto;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
-    input, textarea {
+    input, textarea, button {
       width: 90%;
-      margin: 5px;
-      padding: 8px;
-      border-radius: 5px;
+      margin: 8px;
+      padding: 10px;
+      border-radius: 8px;
       border: none;
     }
 
     button {
-      padding: 10px;
-      margin: 5px;
-      background: #3b82f6;
-      border: none;
+      background: #38bdf8;
       color: white;
       cursor: pointer;
     }
 
-    .back-btn {
-      display: block;
-      margin: 20px auto;
-      padding: 10px 20px;
-      background: #38bdf8;
+    button:hover {
+      background: #0284c7;
+    }
+
+    /* SEARCH */
+    #search {
+      width: 60%;
+      padding: 10px;
+      margin: 15px;
       border-radius: 8px;
       border: none;
-      cursor: pointer;
     }
+
+    /* CARDS */
+    .research-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      background: #334155;
+      margin: 15px;
+      padding: 15px;
+      border-radius: 12px;
+      width: 260px;
+      text-align: left;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      color: #facc15;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .like-btn {
+      margin-top: 10px;
+      background: #22c55e;
+      font-size: 12px;
+    }
+
+    .back-btn {
+      margin: 20px;
+      background: #f97316;
+    }
+
   </style>
 </head>
 
@@ -100,79 +114,110 @@
 
 <header>📄 Research Journal Hub</header>
 
-<div class="container">
+<h2>Add Research Paper</h2>
 
-  <!-- ADD RESEARCH -->
-  <div class="form-box">
-    <h3>Add Research Paper</h3>
-    <input id="title" placeholder="Research Title">
-    <input id="domain" placeholder="Field (AI, Cyber, Web)">
-    <textarea id="desc" placeholder="Abstract / Summary"></textarea>
-    <button onclick="addResearch()">Submit</button>
-  </div>
+<!-- FORM -->
+<div class="form-box">
+  <input id="title" placeholder="Research Title">
+  <input id="field" placeholder="Field (AI, Cyber, Web)">
+  <textarea id="desc" placeholder="Summary..."></textarea>
 
-  <!-- LIST -->
-  <div id="list"></div>
-
-  <button class="back-btn" onclick="goBack()">⬅ Back</button>
-
+  <button onclick="addResearch()">Add Research</button>
 </div>
 
+<!-- SEARCH -->
+<input id="search" placeholder="🔍 Search research..." onkeyup="searchResearch()">
+
+<h2>📚 Latest Research Articles</h2>
+
+<!-- LIST -->
+<div class="research-container" id="list"></div>
+
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
 <script>
+let researches = [
+  {
+    title: "AI in Healthcare",
+    field: "AI",
+    desc: "AI is transforming healthcare with smart diagnosis and predictive models.",
+    img: "https://images.unsplash.com/photo-1677442135136-760c813028c4",
+    date: "2026"
+  },
+  {
+    title: "Cyber Security Trends",
+    field: "Cyber",
+    desc: "Zero trust and AI security systems are future of cyber protection.",
+    img: "https://images.unsplash.com/photo-1518770660439-4636190af475",
+    date: "2025"
+  },
+  {
+    title: "Modern Web Tech",
+    field: "Web",
+    desc: "Next.js, AI UI and serverless apps are shaping the future.",
+    img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+    date: "2026"
+  }
+];
 
 // ADD
-async function addResearch() {
-  const idea = {
-    title: document.getElementById("title").value,
-    domain: document.getElementById("domain").value,
-    description: document.getElementById("desc").value,
-    type: "research",
-    time: new Date().toLocaleString()
-  };
+function addResearch() {
+  const title = document.getElementById("title").value;
+  const field = document.getElementById("field").value;
+  const desc = document.getElementById("desc").value;
 
-  await fetch("/add", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(idea)
+  if (!title || !field || !desc) {
+    alert("Fill all fields!");
+    return;
+  }
+
+  researches.push({
+    title,
+    field,
+    desc,
+    img: "https://via.placeholder.com/300",
+    date: new Date().getFullYear()
   });
 
-  load();
+  displayResearch();
 }
 
-// LOAD
-async function load() {
-  const res = await fetch("/ideas");
-  const data = await res.json();
-
+// DISPLAY
+function displayResearch(data = researches) {
   let html = "";
 
-  data.forEach(i => {
-    if (i.type === "research") {
-      html += `
-        <div class="paper">
-          <img src="https://source.unsplash.com/180x120/?research,technology">
+  data.forEach((r, index) => {
+    html += `
+      <div class="card">
+        <img src="${r.img}">
+        <h3>${r.title}</h3>
+        <p class="meta">${r.field} • ${r.date}</p>
+        <p>${r.desc}</p>
 
-          <div class="content">
-            <h2>${i.title}</h2>
-
-            <span class="tag">${i.domain}</span>
-            <p class="meta">${i.time || ""}</p>
-
-            <p>
-              ${i.description}
-            </p>
-
-            <p>
-              This research contributes to modern technological advancements and explores innovative
-              solutions in the field of ${i.domain}. It can be useful for future developments and academic studies.
-            </p>
-          </div>
-        </div>
-      `;
-    }
+        <button class="like-btn" onclick="like(${index})">👍 Like</button>
+        <a href="#" style="color:#38bdf8;">Read More →</a>
+      </div>
+    `;
   });
 
   document.getElementById("list").innerHTML = html;
+}
+
+// SEARCH
+function searchResearch() {
+  const val = document.getElementById("search").value.toLowerCase();
+
+  const filtered = researches.filter(r =>
+    r.title.toLowerCase().includes(val) ||
+    r.field.toLowerCase().includes(val)
+  );
+
+  displayResearch(filtered);
+}
+
+// LIKE
+function like(i) {
+  alert("👍 You liked: " + researches[i].title);
 }
 
 // BACK
@@ -181,8 +226,7 @@ function goBack() {
 }
 
 // AUTO LOAD
-window.onload = load;
-
+window.onload = displayResearch;
 </script>
 
 </body>
