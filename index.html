@@ -301,16 +301,15 @@ dropdown-menu div {
 .form-box:hover {
   box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
 }
- .glow-text {
+ glow-text {
   font-size: 32px;
   font-weight: bold;
-  color: #00e6ff;
+  color: #c6ff00; /* yellow-green base */
 
   text-shadow: 
-    0 0 5px #00e6ff,
-    0 0 10px #00e6ff,
-    0 0 20px #00e6ff,
-    0 0 40px #00bcd4;
+    0 0 3px #c6ff00,
+    0 0 6px #c6ff00,
+    0 0 12px #aeea00;
 
   animation: glowAnimation 2s ease-in-out infinite alternate;
 }
@@ -318,16 +317,14 @@ dropdown-menu div {
 @keyframes glowAnimation {
   from {
     text-shadow: 
-      0 0 5px #00e6ff,
-      0 0 10px #00e6ff,
-      0 0 20px #00e6ff;
+      0 0 3px #c6ff00,
+      0 0 6px #c6ff00;
   }
   to {
     text-shadow: 
-      0 0 10px #00e6ff,
-      0 0 20px #00e6ff,
-      0 0 40px #00bcd4,
-      0 0 80px #00bcd4;
+      0 0 6px #c6ff00,
+      0 0 12px #aeea00,
+      0 0 20px #8bc34a;
   }
 }
 </style>
