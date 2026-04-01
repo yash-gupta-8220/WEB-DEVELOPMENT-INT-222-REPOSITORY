@@ -356,12 +356,51 @@ form-box {
 
   border: none;
   border-radius: 12px;
+ .collab-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-box {
+  background: rgba(255,255,255,0.1);
+  padding: 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(20px);
+  text-align: center;
+}
+
+.menu-box button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #00e6ff, #00ffa2);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-btn {
+  background: red !important;
+  color: white;
+}
 
 </style>
  <div class="extra-box">
   <input type="text" placeholder="Write a suggestion..." class="comment-input" />
   <button class="comment-btn">Add</button>
   <button class="collab-btn">🤝 Collaborate</button>
+  <button onclick="openMenu()">🤝 Collaborate</button>
 </div>
     
   <div class="logo">💡 IdeaHub</div>
@@ -382,6 +421,18 @@ form-box {
         <div onclick="selectDomain('Cyber')">🔐 Cyber</div>
       </div>
     </div>
+   <div id="collabMenu" class="collab-menu">
+  <div class="menu-box">
+    <h3>Choose Collaboration Type</h3>
+
+    <button onclick="selectType('idea')">✍️ Add Idea</button>
+    <button onclick="selectType('research')">📄 Research Journal</button>
+    <button onclick="selectType('image')">🖼️ Image Idea</button>
+    <button onclick="selectType('startup')">🚀 Startup Idea</button>
+
+    <button onclick="closeMenu()" class="close-btn">Close</button>
+  </div>
+</div>
     
 </head>
 <body>
@@ -466,6 +517,30 @@ document.querySelector(".comment-btn").addEventListener("click", () => {
 document.querySelector(".collab-btn").addEventListener("click", () => {
   showMessage("🤝 Collaboration request sent!", "#007bff");
 });
+ function openMenu() {
+  document.getElementById("collabMenu").style.display = "flex";
+}
+
+function closeMenu() {
+  document.getElementById("collabMenu").style.display = "none";
+}
+
+function selectType(type) {
+  closeMenu();
+
+  if (type === "idea") {
+    showMessage("Add your idea ✍️", "green");
+  } 
+  else if (type === "research") {
+    showMessage("Upload research journal 📄", "blue");
+  } 
+  else if (type === "image") {
+    showMessage("Upload image idea 🖼️", "purple");
+  } 
+  else if (type === "startup") {
+    showMessage("Submit startup idea 🚀", "orange");
+  }
+}
 
 </script>
 
