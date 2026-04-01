@@ -301,6 +301,35 @@ dropdown-menu div {
 .form-box:hover {
   box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
 }
+ .glow-text {
+  font-size: 32px;
+  font-weight: bold;
+  color: #00e6ff;
+
+  text-shadow: 
+    0 0 5px #00e6ff,
+    0 0 10px #00e6ff,
+    0 0 20px #00e6ff,
+    0 0 40px #00bcd4;
+
+  animation: glowAnimation 2s ease-in-out infinite alternate;
+}
+
+@keyframes glowAnimation {
+  from {
+    text-shadow: 
+      0 0 5px #00e6ff,
+      0 0 10px #00e6ff,
+      0 0 20px #00e6ff;
+  }
+  to {
+    text-shadow: 
+      0 0 10px #00e6ff,
+      0 0 20px #00e6ff,
+      0 0 40px #00bcd4,
+      0 0 80px #00bcd4;
+  }
+}
 </style>
  <div class="extra-box">
   <input type="text" placeholder="Write a suggestion..." class="comment-input" />
@@ -331,6 +360,7 @@ dropdown-menu div {
 <body>
 
 <h1>💡 Idea Collaboration Platform</h1>
+ <h1 class="glow-text">Idea Collaboration Platform</h1>
 
 <div class="container">
 
