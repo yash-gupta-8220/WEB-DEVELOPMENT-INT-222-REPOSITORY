@@ -451,9 +451,9 @@ form-box {
     <div id="list"></div>
 
 </div>
-
+<script src="/socket.io/socket.io.js"></script>
 <script>
-
+ const socket =io();
 async function addIdea() {
     const idea = {
         title: document.getElementById("title").value,
@@ -540,6 +540,14 @@ function selectType(type) {
     showMessage("Submit startup idea 🚀", "orange");
   }
 }
+ socket.on("chatMessage", (msg) => {
+  const box = document.getElementById("messages");
+  if (box) {
+    box.innerHTML += <p>👤 ${msg}</p>;
+  }
+});
+
+window.onload = loadIdeas;
 
 </script>
 
