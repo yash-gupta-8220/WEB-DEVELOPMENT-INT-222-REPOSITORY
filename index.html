@@ -376,6 +376,35 @@ async function loadIdeas() {
 }
 
 loadIdeas();
+ <script>
+function showMessage(text, color) {
+  const box = document.getElementById("messageBox");
+  box.style.display = "block";
+  box.style.background = color;
+  box.style.color = "#fff";
+  box.innerText = text;
+
+  setTimeout(() => {
+    box.style.display = "none";
+  }, 2000);
+}
+
+document.querySelector(".comment-btn").addEventListener("click", () => {
+  const input = document.querySelector(".comment-input");
+
+  if (input.value.trim() === "") {
+    showMessage("⚠️ Please write a suggestion!", "#dc3545");
+    return;
+  }
+
+  showMessage("✅ Suggestion added!", "#28a745");
+  input.value = "";
+});
+
+document.querySelector(".collab-btn").addEventListener("click", () => {
+  showMessage("🤝 Collaboration request sent!", "#007bff");
+});
+</script>
 </script>
 
 </body>
