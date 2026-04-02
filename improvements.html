@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Suggest Improvements</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(to right, #020617, #1e293b);
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      color: #facc15;
+      margin-top: 20px;
+    }
+
+    .form-box {
+      background: #1e293b;
+      padding: 20px;
+      width: 320px;
+      margin: 20px auto;
+      border-radius: 12px;
+    }
+
+    input, textarea, button {
+      width: 90%;
+      margin: 8px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      background: #22c55e;
+      color: white;
+      cursor: pointer;
+    }
+
+    .suggestions {
+      margin-top: 20px;
+    }
+
+    .card {
+      background: #334155;
+      margin: 10px auto;
+      padding: 12px;
+      width: 260px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .tag {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      background: #f97316;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>💡 Suggest Improvements</h1>
+
+<div class="form-box">
+  <input id="title" placeholder="Idea Title">
+  <input id="domain" placeholder="Domain (AI, Web, Startup)">
+  <textarea id="desc" placeholder="Your suggestion..."></textarea>
+
+  <button onclick="addSuggestion()">Submit Suggestion</button>
+</div>
+
+<div class="suggestions" id="list"></div>
+
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+<script>
+
+let suggestions = [];
+
+// ADD
+function addSuggestion() {
+  const title = document.getElementById("title").value;
+  const domain = document.getElementById("domain").value;
+  const desc = document.getElementById("desc").value;
+
+  if (!title || !domain || !desc) {
+    alert("Fill all fields!");
+    return;
+  }
+
+  suggestions.push({ title, domain, desc });
+  display();
+}
+
+// DISPLAY
+function display() {
+  let html = "";
+
+  suggestions.forEach(s => {
+    html += `
+      <div class="card">
+        <h3>${s.title}</h3>
+        <p class="tag">${s.domain}</p>
+        <p>${s.desc}</p>
+      </div>
+    `;
+  });
+
+  document.getElementById("list").innerHTML = html;
+}
+
+// BACK
+function goBack() {
+  window.location.href = "/";
+}
+
+</script>
+
+</body>
+</html>
