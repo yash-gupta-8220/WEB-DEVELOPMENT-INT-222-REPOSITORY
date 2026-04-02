@@ -1,31 +1,33 @@
 const express = require("express");
+const fs = require("fs");
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname)); // serve frontend
 
-// 🔥 ADD THIS LINE (VERY IMPORTANT)
-app.use(express.static(__dirname));
 
 let ideas = [];
 
-// open website
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
+if (fs.existsSync("data.json")) {
+  ideas = JSON.parse(fs.readFileSync("data.json"));
+}
 
-// add idea
+
 app.post("/add", (req, res) => {
   ideas.push(req.body);
-  res.send("Idea Added");
+
+  // SAVE TO FILE
+  fs.writeFileSync("data.json", JSON.stringify(ideas, null, 2));
+
+  res.json({ message: "Idea saved successfully" });
 });
 
-// get ideas
+
 app.get("/ideas", (req, res) => {
   res.json(ideas);
 });
 
-// start server
+
 app.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
+  console.log("Server running on port 3000");
 });
