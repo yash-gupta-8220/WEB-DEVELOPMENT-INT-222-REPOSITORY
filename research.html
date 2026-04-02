@@ -261,7 +261,7 @@ function displayResearch(data = researches) {
 }
 
 // ADD
-function addResearch() {
+async function addResearch() {
   const title = document.getElementById("title").value;
   const field = document.getElementById("field").value;
   const desc = document.getElementById("desc").value;
@@ -271,14 +271,24 @@ function addResearch() {
     return;
   }
 
-  researches.push({
-    title,
-    field,
-    desc,
-    img: "https://via.placeholder.com/400x200?text=New+Research",
-    date: new Date().getFullYear()
+  const data = { title, field, desc };
+
+  await fetch("https://your-backend-url.onrender.com/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
   });
 
+  loadResearch();
+}
+  
+  async function loadResearch() {
+  const res = await fetch("https://your-backend-url.onrender.com/ideas");
+  const data = await res.json();
+
+  researches = data;
   displayResearch();
 }
 
