@@ -426,7 +426,7 @@ form-box {
 
     <button onclick="selectType('idea')">✍️ Add Idea</button>
     <button onclick="selectType('research')">📄 Research Journal</button>
-    <button onclick="selectType('image')">🖼️ Image Idea</button>
+    <button onclick="selectType('SUGGEST IMPROVEMENTS')">Suggest Improvements</button>
     <button onclick="selectType('startup')">🚀 Startup Idea</button>
 
     <button onclick="closeMenu()" class="close-btn">Close</button>
@@ -532,8 +532,8 @@ function selectType(type) {
     return;
   }
 
-  else if (type === "image") {
-    window.location.href = "image.html";
+  else if (type === "SUGGEST IMPROVEMENTS") {
+    window.location.href = "improvements.html";
     return;
   }
 
