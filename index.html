@@ -398,7 +398,7 @@ form-box {
 </style>
  <div class="extra-box">
   <input type="text" placeholder="Write a suggestion..." class="comment-input" />
-  <button class="comment-btn">Add</button>
+  <button id="addBtn">Add</button>
   <button onclick="openMenu()">🤝 Collaborate</button>
 </div>
     
@@ -512,8 +512,8 @@ document.querySelector(".comment-btn").addEventListener("click", () => {
   input.value = "";
 });
 
-document.querySelector(".collab-btn").addEventListener("click", () => {
-  showMessage("🤝 Collaboration request sent!", "#007bff");
+document.getElementById("addBtn").addEventListener("click", () => {
+  openMenu();
 });
  function openMenu() {
   document.getElementById("collabMenu").style.display = "flex";
