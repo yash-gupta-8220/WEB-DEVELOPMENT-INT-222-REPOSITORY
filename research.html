@@ -100,6 +100,27 @@
       margin: 20px;
       background: #f97316;
     }
+    .gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px;
+}
+
+.gallery img {
+  width: 200px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.gallery img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #38bdf8;
+}
   </style>
 </head>
 
@@ -124,6 +145,15 @@
 <h2>📚 Latest Research Articles</h2>
 
 <div class="research-container" id="list"></div>
+  <h2>🖼️ Research Visual Gallery</h2>
+
+<div class="gallery">
+  <img src="images/ai.jpg">
+  <img src="images/cyber.jpg">
+  <img src="images/web.jpg">
+  <img src="images/ai.jpg">
+  <img src="images/cyber.jpg">
+</div>
 
 <button class="back-btn" onclick="goBack()">⬅ Back</button>
 
