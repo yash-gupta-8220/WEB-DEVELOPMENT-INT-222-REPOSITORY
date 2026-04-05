@@ -470,21 +470,22 @@ async function addIdea() {
 }
 
 async function loadIdeas() {
-    const res = await fetch("/ideas");
-    const data = await res.json();
+  const res = await fetch("https://web-development-int-222-repository.onrender.com/ideas");
+  const data = await res.json();
 
-    let html = "";
-    data.forEach(i => {
-        html += `
-            <div class="idea-card">
-                <h3>${i.title}</h3>
-                <p class="domain">${i.domain}</p>
-                <p>${i.description}</p>
-            </div>
-        `;
-    });
+  let html = "";
 
-    document.getElementById("list").innerHTML = html;
+  data.forEach(i => {
+    html += `
+      <div class="idea-card">
+        <h3>${i.title}</h3>
+        <p class="domain">${i.domain}</p>
+        <p>${i.description}</p>
+      </div>
+    `;
+  });
+
+  document.getElementById("list").innerHTML = html;
 }
 
 loadIdeas();
