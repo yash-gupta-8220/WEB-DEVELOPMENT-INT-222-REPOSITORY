@@ -1,33 +1,48 @@
 const express = require("express");
-const fs = require("fs");
+const mongoose = require("mongoose");
+const cors = require("cors");
+
 const app = express();
-
+app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname)); // serve frontend
 
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("Connected to MongoDB"))
+.catch(err => console.log(err));
 
-let ideas = [];
-
-if (fs.existsSync("data.json")) {
-  ideas = JSON.parse(fs.readFileSync("data.json"));
-}
-
-
-app.post("/add", (req, res) => {
-  ideas.push(req.body);
-
-  // SAVE TO FILE
-  fs.writeFileSync("data.json", JSON.stringify(ideas, null, 2));
-
-  res.json({ message: "Idea saved successfully" });
+// Schema
+const IdeaSchema = new mongoose.Schema({
+    title: String,
+    domain: String,
+    content: String,
+    history: [{ text: String, date: { type: Date, default: Date.now } }]
 });
 
+const Idea = mongoose.model("Idea", IdeaSchema);
 
-app.get("/ideas", (req, res) => {
-  res.json(ideas);
+// Routes
+app.get("/api/ideas", async (req, res) => {
+    const ideas = await Idea.find().sort({ _id: -1 });
+    res.json(ideas);
 });
 
+app.post("/api/ideas", async (req, res) => {
+    const { title, domain, content } = req.body;
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+    const newIdea = new Idea({
+        title,
+        domain,
+        content,
+        history: [{ text: content }]
+    });
+
+    await newIdea.save();
+    res.json(newIdea);
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(Server running on port ${PORT});
 });
