@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+
+<h2>🔑 Login</h2>
+<input id="luser" placeholder="Username"><br><br>
+<input id="lpass" type="password" placeholder="Password"><br><br>
+<button onclick="login()">Login</button>
+
+<h2>🔐 Register</h2>
+<input id="ruser" placeholder="Username"><br><br>
+<input id="rpass" type="password" placeholder="Password"><br><br>
+<button onclick="register()">Register</button>
+
+<script>
+
+// ================= LOGIN =================
+async function login() {
+    const username = document.getElementById("luser").value.trim();
+    const password = document.getElementById("lpass").value.trim();
+
+    if (!username || !password) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    try {
+        const res = await fetch("/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+
+        if (data.token) {
+            localStorage.setItem("token", data.token);
+            alert("Login successful ✅");
+            window.location.href = "/index.html";
+        } else {
+            alert(data.message || "Login failed");
+        }
+
+    } catch (err) {
+        alert("Server error ❌");
+    }
+}
+
+// ================= REGISTER =================
+async function register() {
+    const username = document.getElementById("ruser").value.trim();
+    const password = document.getElementById("rpass").value.trim();
+
+    if (!username || !password) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    try {
+        const res = await fetch("/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+        alert(data.message);
+
+    } catch (err) {
+        alert("Server error ❌");
+    }
+}
+
+// ================= AUTO REDIRECT IF LOGGED IN =================
+if (localStorage.getItem("token")) {
+    window.location.href = "/index.html";
+}
+
+</script>
+
+</body>
+</html>
