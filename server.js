@@ -7,28 +7,23 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static(__dirname));
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/login.html");
-});
 
 // ===== SECRET =====
 const SECRET = process.env.SECRET || "mysecretkey";
 
 // ===== USERS =====
 let users = [];
-
 if (fs.existsSync("users.json")) {
     users = JSON.parse(fs.readFileSync("users.json"));
 }
 
 // ===== IDEAS =====
 let ideas = [];
-
 if (fs.existsSync("data.json")) {
     ideas = JSON.parse(fs.readFileSync("data.json"));
 }
 
-// ===== AUTH =====
+// ===== AUTH MIDDLEWARE =====
 function auth(req, res, next) {
     const token = req.headers["authorization"];
 
@@ -45,14 +40,22 @@ function auth(req, res, next) {
     }
 }
 
+// ===== DEFAULT ROUTE (OPEN LOGIN PAGE FIRST) =====
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/login.html");
+});
+
 // ===== REGISTER =====
 app.post("/register", async (req, res) => {
     const { username, password } = req.body;
 
+    if (!username || !password) {
+        return res.json({ message: "Fill all fields" });
+    }
+
     const hashed = await bcrypt.hash(password, 10);
 
     users.push({ username, password: hashed });
-
     fs.writeFileSync("users.json", JSON.stringify(users, null, 2));
 
     res.json({ message: "User registered ✅" });
@@ -85,7 +88,7 @@ app.post("/add", auth, (req, res) => {
 
     fs.writeFileSync("data.json", JSON.stringify(ideas, null, 2));
 
-    res.json({ message: "Idea saved successfully ✅" });
+    res.json({ message: "Idea saved ✅" });
 });
 
 // ===== GET IDEAS =====
