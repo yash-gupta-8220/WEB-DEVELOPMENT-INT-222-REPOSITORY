@@ -437,17 +437,7 @@ form-box {
 <body>
 
 <h1>💡 Idea Repository Platform</h1>
- <h2>🔐 Register</h2>
-<input id="ruser" placeholder="Username">
-<input id="rpass" type="password" placeholder="Password">
-<button onclick="register()">Register</button>
-
-<h2>🔑 Login</h2>
-<input id="luser" placeholder="Username">
-<input id="lpass" type="password" placeholder="Password">
-<button onclick="login()">Login</button>
-
-<hr>
+ 
 
 <div class="container">
 
@@ -554,45 +544,7 @@ function selectType(type) {
     return;
   }
 
-  // ✅ for idea (stay same page)
-  document.getElementById("typeInput").value = type;
-  document.getElementById("formSection").style.display = "block";
-}
- // ================= REGISTER =================
-async function register() {
-    const username = document.getElementById("ruser").value;
-    const password = document.getElementById("rpass").value;
-
-    const res = await fetch("/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
-    });
-
-    const data = await res.json();
-    alert(data.message);
-}
-
-// ================= LOGIN =================
-async function login() {
-    const username = document.getElementById("luser").value;
-    const password = document.getElementById("lpass").value;
-
-    const res = await fetch("/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
-    });
-
-    const data = await res.json();
-
-    if (data.token) {
-        localStorage.setItem("token", data.token);
-        alert("Login successful ✅");
-    } else {
-        alert(data.message);
-    }
-}
+ 
  
 </script>
 
