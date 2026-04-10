@@ -2,9 +2,11 @@
   "name": "idea-app",
   "version": "1.0.0",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
-    "express": "^4.22.1",
-    "jsonwebtoken": "^9.0.3",
-    "socket.io": "^4.8.3"
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0"
   }
 }
