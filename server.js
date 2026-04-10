@@ -4,26 +4,28 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const app = express();
+
 app.use(express.json());
-app.use(express.static(__dirname)); // serve frontend
+app.use(express.static(__dirname));
 
-const SECRET = "mysecretkey";
+// ===== SECRET =====
+const SECRET = process.env.SECRET || "mysecretkey";
 
-// ================= USERS =================
+// ===== USERS =====
 let users = [];
 
 if (fs.existsSync("users.json")) {
     users = JSON.parse(fs.readFileSync("users.json"));
 }
 
-// ================= IDEAS =================
+// ===== IDEAS =====
 let ideas = [];
 
 if (fs.existsSync("data.json")) {
     ideas = JSON.parse(fs.readFileSync("data.json"));
 }
 
-// ================= AUTH MIDDLEWARE =================
+// ===== AUTH =====
 function auth(req, res, next) {
     const token = req.headers["authorization"];
 
@@ -36,11 +38,11 @@ function auth(req, res, next) {
         req.user = decoded;
         next();
     } catch (err) {
-        res.status(401).json({ message: "Invalid token" });
+        return res.status(401).json({ message: "Invalid token" });
     }
 }
 
-// ================= REGISTER =================
+// ===== REGISTER =====
 app.post("/register", async (req, res) => {
     const { username, password } = req.body;
 
@@ -53,7 +55,7 @@ app.post("/register", async (req, res) => {
     res.json({ message: "User registered ✅" });
 });
 
-// ================= LOGIN =================
+// ===== LOGIN =====
 app.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
@@ -74,7 +76,7 @@ app.post("/login", async (req, res) => {
     res.json({ token });
 });
 
-// ================= ADD IDEA (PROTECTED) =================
+// ===== ADD IDEA (PROTECTED) =====
 app.post("/add", auth, (req, res) => {
     ideas.push(req.body);
 
@@ -83,12 +85,12 @@ app.post("/add", auth, (req, res) => {
     res.json({ message: "Idea saved successfully ✅" });
 });
 
-// ================= GET IDEAS =================
+// ===== GET IDEAS =====
 app.get("/ideas", (req, res) => {
     res.json(ideas);
 });
 
-// ================= DELETE IDEA (BONUS FEATURE 🔥) =================
+// ===== DELETE IDEA =====
 app.delete("/delete/:index", auth, (req, res) => {
     const index = req.params.index;
 
@@ -99,9 +101,9 @@ app.delete("/delete/:index", auth, (req, res) => {
     res.json({ message: "Idea deleted 🗑️" });
 });
 
-// ================= SERVER =================
+// ===== SERVER =====
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log(🔥 Server running on port ${PORT});
+    console.log(Server running on port ${PORT});
 });
