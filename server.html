@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Idea Platform</title>
+</head>
+<body>
+
+<h2>🔐 Register</h2>
+<input id="ruser" placeholder="Username">
+<input id="rpass" placeholder="Password">
+<button onclick="register()">Register</button>
+
+<h2>🔐 Login</h2>
+<input id="luser" placeholder="Username">
+<input id="lpass" placeholder="Password">
+<button onclick="login()">Login</button>
+
+<hr>
+
+<h2>💡 Add Idea</h2>
+<input id="title" placeholder="Title"><br>
+<input id="domain" placeholder="Domain"><br>
+<input id="desc" placeholder="Description"><br>
+<button onclick="addIdea()">Add Idea</button>
+
+<hr>
+
+<h2>📋 Ideas</h2>
+<div id="list"></div>
+
+<!-- 🔥 SOCKET.IO SCRIPT -->
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+let token = "";
+const socket = io();
+
+//////////////////////////////////////////////////////
+// 🔐 REGISTER
+//////////////////////////////////////////////////////
+function register(){
+    fetch("/register",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            username:ruser.value,
+            password:rpass.value
+        })
+    }).then(r=>r.json()).then(d=>alert(d.message));
+}
+
+//////////////////////////////////////////////////////
+// 🔐 LOGIN
+//////////////////////////////////////////////////////
+function login(){
+    fetch("/login",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            username:luser.value,
+            password:lpass.value
+        })
+    })
+    .then(r=>r.json())
+    .then(d=>{
+        token=d.token;
+        alert("Login successful");
+        load();
+    });
+}
+
+//////////////////////////////////////////////////////
+// 💡 ADD IDEA
+//////////////////////////////////////////////////////
+function addIdea(){
+    fetch("/add",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":token
+        },
+        body:JSON.stringify({
+            title:title.value,
+            domain:domain.value,
+            description:desc.value
+        })
+    });
+}
+
+//////////////////////////////////////////////////////
+// 📋 LOAD IDEAS
+//////////////////////////////////////////////////////
+function load(){
+    fetch("/ideas")
+    .then(r=>r.json())
+    .then(data=>{
+        display(data);
+    });
+}
+
+//////////////////////////////////////////////////////
+// 📋 DISPLAY
+//////////////////////////////////////////////////////
+function display(data){
+    let html="";
+    data.forEach(i=>{
+        html+=`
+        <div style="border:1px solid black;margin:10px;padding:10px;">
+            <h3>${i.title}</h3>
+            <p>${i.domain}</p>
+            <p>${i.description}</p>
+            <p>👍 ${i.likes}</p>
+
+            <button onclick="like('${i.id}')">Like</button>
+            <button onclick="collab('${i.id}')">Collaborate</button>
+
+            <br><br>
+            <input id="c${i.id}" placeholder="Comment">
+            <button onclick="comment('${i.id}')">Comment</button>
+
+            <div>
+                ${i.comments.map(c => <p>💬 ${c.user}: ${c.text}</p>).join("")}
+            </div>
+        </div>
+        `;
+    });
+    list.innerHTML=html;
+}
+
+//////////////////////////////////////////////////////
+// 👍 LIKE
+//////////////////////////////////////////////////////
+function like(id){
+    fetch(/ideas/${id}/like,{
+        method:"PUT"
+    });
+}
+
+//////////////////////////////////////////////////////
+// 💬 COMMENT
+//////////////////////////////////////////////////////
+function comment(id){
+    let text=document.getElementById("c"+id).value;
+
+    fetch(/ideas/${id}/comment,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":token
+        },
+        body:JSON.stringify({text})
+    });
+}
+
+//////////////////////////////////////////////////////
+// 🤝 COLLABORATE
+//////////////////////////////////////////////////////
+function collab(id){
+    fetch(/ideas/${id}/collaborate,{
+        method:"POST",
+        headers:{
+            "Authorization":token
+        }
+    }).then(()=>alert("Request Sent"));
+}
+
+//////////////////////////////////////////////////////
+// ⚡ SOCKET EVENTS (REAL-TIME)
+//////////////////////////////////////////////////////
+
+socket.on("newIdea", () => {
+    load();
+});
+
+socket.on("newComment", () => {
+    load();
+});
+
+socket.on("likeUpdate", () => {
+    load();
+});
+
+socket.on("ideaUpdated", () => {
+    load();
+});
+
+socket.on("collabRequest", () => {
+    load();
+});
+
+//////////////////////////////////////////////////////
+// 🚀 INITIAL LOAD
+//////////////////////////////////////////////////////
+load();
+</script>
+
+</body>
+</html>
