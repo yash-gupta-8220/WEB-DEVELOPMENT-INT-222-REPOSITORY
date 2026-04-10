@@ -558,6 +558,41 @@ function selectType(type) {
   document.getElementById("typeInput").value = type;
   document.getElementById("formSection").style.display = "block";
 }
+ // ================= REGISTER =================
+async function register() {
+    const username = document.getElementById("ruser").value;
+    const password = document.getElementById("rpass").value;
+
+    const res = await fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+    alert(data.message);
+}
+
+// ================= LOGIN =================
+async function login() {
+    const username = document.getElementById("luser").value;
+    const password = document.getElementById("lpass").value;
+
+    const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+
+    if (data.token) {
+        localStorage.setItem("token", data.token);
+        alert("Login successful ✅");
+    } else {
+        alert(data.message);
+    }
+}
  
 </script>
 
