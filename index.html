@@ -453,32 +453,7 @@ form-box {
 
 </div>
 <script>
- function updateIdea(id) {
-
-    const newTitle = prompt("Enter new title:");
-    const newDomain = prompt("Enter new domain:");
-    const newDesc = prompt("Enter new description:");
-
-    fetch("/update/" + id, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            title: newTitle,
-            domain: newDomain,
-            description: newDesc
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message);
-        loadIdeas(); // refresh list
-    });
-}
-
-
- function loadIdeas() {
+[8:19 PM, 4/11/2026] YASH: function loadIdeas() {
     fetch("/ideas")
     .then(res => res.json())
     .then(data => {
@@ -496,23 +471,114 @@ form-box {
             <hr>
             `;
         });
- 
+[8:30 PM, 4/11/2026] YASH: app.put("/update/:id", (req, res) => {
+    const id = req.params.id;
 
+    // check if idea exists
+    if (!ideas[id]) {
+        return res.json({ message: "Idea not found" });
+    }
+
+    // update idea
+    ideas[id] = {
+        ...ideas[id],
+        ...req.body
+    };
+
+    // save to file
+    fs.writeFileSync("data.json", JSON.stringify(ideas, null, 2));
+
+    res.json({ message: "Idea updated successfully" });
+});
+[8:33 PM, 4/11/2026] YASH: <script>
+
+// 🔹 LOAD IDEAS
+function loadIdeas() {
+    fetch("/ideas")
+    .then(res => res.json())
+    .then(data => {
+        let output = "";
+
+        data.forEach((i, index) => {
+            output += `
+            <div>
+                <h3>${i.title}</h3>
+                <p>${i.description}</p>
+                <p>${i.domain}</p>
+
+                <button onclick="updateIdea(${index})">Edit ✏️</button>
+            </div>
+            <hr>
+            `;
+        });
+
+        document.getElementById("ideas").innerHTML = output;
+    });
+}
+
+// 🔹 ADD IDEA
 async function addIdea() {
+
+    const title = document.getElementById("title").value;
+    const domain = document.getElementById("domain").value;
+    const desc = document.getElementById("desc").value;
+
+    // ✅ VALIDATION
+    if (!title || !domain || !desc) {
+        alert("⚠️ All fields are required!");
+        return;
+    }
+
     const idea = {
-        title: document.getElementById("title").value,
-        domain: document.getElementById("domain").value,
-        description: document.getElementById("desc").value
+        title,
+        domain,
+        description: desc
     };
 
     await fetch("/add", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify(idea)
     });
 
+    alert("Idea added successfully!");
     loadIdeas();
 }
+
+// 🔹 UPDATE IDEA
+function updateIdea(id) {
+
+    const newTitle = prompt("Enter new title:");
+    const newDomain = prompt("Enter new domain:");
+    const newDesc = prompt("Enter new description:");
+
+    if (!newTitle || !newDomain || !newDesc) {
+        alert("All fields required!");
+        return;
+    }
+
+    fetch("/update/" + id, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title: newTitle,
+            domain: newDomain,
+            description: newDesc
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        loadIdeas();
+    });
+}
+
+// 🔹 LOAD ON PAGE START
+loadIdeas();
 
 
 async function loadIdeas() {
