@@ -61,25 +61,6 @@ app.post("/add", (req, res) => {
 app.get("/ideas", (req, res) => {
   res.json(ideas);
 });
-app.put("/update/:id", (req, res) => {
-    const id = req.params.id;
-
-    // check if idea exists
-    if (!ideas[id]) {
-        return res.json({ message: "Idea not found" });
-    }
-
-    // update idea
-    ideas[id] = {
-        ...ideas[id],
-        ...req.body
-    };
-
-    // save to file
-    fs.writeFileSync("data.json", JSON.stringify(ideas, null, 2));
-
-    res.json({ message: "Idea updated successfully" });
-});
 
 
 app.listen(3000, () => {
