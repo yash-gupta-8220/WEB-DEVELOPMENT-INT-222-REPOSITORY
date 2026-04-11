@@ -527,22 +527,19 @@ function closeMenu() {
 function selectType(type) {
   closeMenu();
 
-  // 🔥 open new pages
-  if (type === "research") {
-    window.location.href = "research.html";
-    return;
-  }
-
-  else if (type === "SUGGEST IMPROVEMENTS") {
-    window.location.href = "improvements.html";
-    return;
-  }
-
+  if (type === "idea") {
+    showMessage("Add your idea ✍️", "green");
+  } 
+  else if (type === "research") {
+    showMessage("Upload research journal 📄", "blue");
+  } 
+  else if (type === "image") {
+    showMessage("Upload image idea 🖼️", "purple");
+  } 
   else if (type === "startup") {
-    window.location.href = "startup.html";
-    return;
+    showMessage("Submit startup idea 🚀", "orange");
   }
-
+}
  
  
 </script>
