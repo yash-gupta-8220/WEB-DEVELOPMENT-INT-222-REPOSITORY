@@ -467,9 +467,13 @@ async function addIdea() {
 
     await fetch("/add", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+         "Content-Type": "application/json" ,
+         "authorization" :token
+        },
         body: JSON.stringify(idea)
     });
+ alert("Idea added");
 
     loadIdeas();
 }
