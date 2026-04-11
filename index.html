@@ -459,6 +459,9 @@ form-box {
 }
 
 async function addIdea() {
+
+    const token = localStorage.getItem("token"); // ✅ MUST
+
     const idea = {
         title: document.getElementById("title").value,
         domain: document.getElementById("domain").value,
@@ -468,15 +471,16 @@ async function addIdea() {
     await fetch("/add", {
         method: "POST",
         headers: {
-         "Content-Type": "application/json" ,
-         "authorization" :token
+            "Content-Type": "application/json",
+            "authorization": token
         },
         body: JSON.stringify(idea)
     });
- alert("Idea added");
 
+    alert("Idea added");
     loadIdeas();
 }
+
 
 async function loadIdeas() {
   const res = await fetch("https://web-development-int-222-repository.onrender.com/ideas");
