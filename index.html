@@ -476,12 +476,13 @@ async function loadIdeas() {
 
   let html = "";
 
-  data.forEach(i => {
+  data.forEach((i,index) => {
     html += `
       <div class="idea-card">
         <h3>${i.title}</h3>
         <p class="domain">${i.domain}</p>
         <p>${i.description}</p>
+          <button onclick="updateIdea(${index})">Update</button>
       </div>
     `;
   });
@@ -490,6 +491,23 @@ async function loadIdeas() {
 }
 
 loadIdeas();
+ async function updateIdea(index) {
+    const updatedIdea = {
+        title: document.getElementById("title").value,
+        domain: document.getElementById("domain").value,
+        description: document.getElementById("desc").value
+    };
+
+    await fetch(`/update/${index}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedIdea)
+    });
+
+    loadIdeas(); // refresh list
+}
 function showMessage(text, color) {
   const box = document.getElementById("messageBox");
   box.style.display = "block";
