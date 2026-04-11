@@ -525,20 +525,32 @@ function closeMenu() {
 }
 
 function selectType(type) {
-  closeMenu();
+    closeMenu();
 
-  if (type === "idea") {
-    showMessage("Add your idea ✍️", "green");
-  } 
-  else if (type === "research") {
-    showMessage("Upload research journal 📄", "blue");
-  } 
-  else if (type === "image") {
-    showMessage("Upload image idea 🖼️", "purple");
-  } 
-  else if (type === "startup") {
-    showMessage("Submit startup idea 🚀", "orange");
-  }
+    if (type === "idea") {
+        showMessage("Add your idea 👍", "green");
+    }
+
+    else if (type === "research") {
+        showMessage("Upload research journal 📄", "blue");
+        setTimeout(() => {
+            window.location.href = "research.html";
+        }, 500);
+    }
+
+    else if (type === "SUGGEST IMPROVEMENTS") {
+        showMessage("Suggest improvements 💡", "purple");
+        setTimeout(() => {
+            window.location.href = "improvements.html";
+        }, 500);
+    }
+
+    else if (type === "startup") {
+        showMessage("Submit startup idea 🚀", "orange");
+        setTimeout(() => {
+            window.location.href = "startup.html";
+        }, 500);
+    }
 }
  
  
