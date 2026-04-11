@@ -453,6 +453,49 @@ form-box {
 
 </div>
 <script>
+ function updateIdea(id) {
+
+    const newTitle = prompt("Enter new title:");
+    const newDomain = prompt("Enter new domain:");
+    const newDesc = prompt("Enter new description:");
+
+    fetch("/update/" + id, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title: newTitle,
+            domain: newDomain,
+            description: newDesc
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        loadIdeas(); // refresh list
+    });
+}
+
+
+ function loadIdeas() {
+    fetch("/ideas")
+    .then(res => res.json())
+    .then(data => {
+        let output = "";
+
+        data.forEach((i, index) => {
+            output += `
+            <div>
+                <h3>${i.title}</h3>
+                <p>${i.description}</p>
+                <p>${i.domain}</p>
+
+                <button onclick="updateIdea(${index})">Edit ✏️</button>
+            </div>
+            <hr>
+            `;
+        });
  
 
 async function addIdea() {
