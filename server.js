@@ -13,6 +13,9 @@ app.use(express.static(__dirname));
 // 👤 USERS (TEMP STORAGE)
 // =============================
 let users = [];
+if (fs.existsSync("users.json")) {
+    users = JSON.parse(fs.readFileSync("users.json"));
+}
 
 // =============================
 // 💡 LOAD IDEAS FROM FILE
