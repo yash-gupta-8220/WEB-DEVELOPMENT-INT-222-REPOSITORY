@@ -10,9 +10,10 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 // =============================
-// 👤 USERS (TEMP STORAGE)
+// 👤 LOAD USERS FROM FILE
 // =============================
 let users = [];
+
 if (fs.existsSync("users.json")) {
     users = JSON.parse(fs.readFileSync("users.json"));
 }
@@ -32,28 +33,36 @@ if (fs.existsSync("data.json")) {
 app.post("/register", (req, res) => {
     const { username, password } = req.body;
 
+    // check if user exists
+    const existing = users.find(u => u.username === username);
+    if (existing) {
+        return res.json({ message: "User already exists" });
+    }
+
     users.push({ username, password });
+
+    fs.writeFileSync("users.json", JSON.stringify(users, null, 2));
 
     res.json({ message: "User registered successfully" });
 });
 
 // =============================
-// 🔐 LOGIN (JWT)
+// 🔐 LOGIN
 // =============================
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
 
-    const user = users.find(u => 
+    const user = users.find(u =>
         u.username === username && u.password === password
     );
 
     if (!user) {
-        return res.status(401).json({ message: "Invalid credentials" });
+        return res.json({ message: "Login failed" });
     }
 
     const token = jwt.sign({ username }, SECRET, { expiresIn: "1h" });
 
-    res.json({ message: "Login successful", token });
+    res.json({ token });
 });
 
 // =============================
@@ -63,15 +72,15 @@ function auth(req, res, next) {
     const token = req.headers["authorization"];
 
     if (!token) {
-        return res.status(403).json({ message: "No token provided" });
+        return res.send("No token");
     }
 
     try {
-        const decoded = jwt.verify(token, SECRET);
-        req.user = decoded;
+        const data = jwt.verify(token, SECRET);
+        req.user = data;
         next();
-    } catch (err) {
-        res.status(401).json({ message: "Invalid token" });
+    } catch {
+        res.send("Invalid token");
     }
 }
 
@@ -85,85 +94,40 @@ app.post("/add", auth, (req, res) => {
         description: req.body.description,
         domain: req.body.domain,
         user: req.user.username,
-        likes: 0,
-        comments: [],
-        updates: []
+        likes: 0
     };
 
     ideas.push(newIdea);
 
     fs.writeFileSync("data.json", JSON.stringify(ideas, null, 2));
 
-    res.json({ message: "Idea added successfully" });
+    res.json({ message: "Idea added" });
 });
 
 // =============================
-// 📥 GET ALL IDEAS
+// 📥 GET IDEAS
 // =============================
 app.get("/ideas", (req, res) => {
     res.json(ideas);
 });
 
 // =============================
-// ❤️ LIKE IDEA
+// ❤️ LIKE
 // =============================
 app.post("/like/:id", (req, res) => {
     const idea = ideas.find(i => i.id == req.params.id);
 
-    if (!idea) return res.send("Idea not found");
+    if (idea) {
+        idea.likes++;
+        fs.writeFileSync("data.json", JSON.stringify(ideas, null, 2));
+    }
 
-    idea.likes++;
-    fs.writeFileSync("data.json", JSON.stringify(ideas, null, 2));
-
-    res.json({ message: "Liked", likes: idea.likes });
-});
-
-// =============================
-// 💬 ADD COMMENT
-// =============================
-app.post("/comment/:id", (req, res) => {
-    const idea = ideas.find(i => i.id == req.params.id);
-
-    if (!idea) return res.send("Idea not found");
-
-    idea.comments.push(req.body.comment);
-
-    fs.writeFileSync("data.json", JSON.stringify(ideas, null, 2));
-
-    res.json({ message: "Comment added" });
-});
-
-// =============================
-// 🔄 ADD UPDATE (EVOLUTION)
-// =============================
-app.post("/update/:id", (req, res) => {
-    const idea = ideas.find(i => i.id == req.params.id);
-
-    if (!idea) return res.send("Idea not found");
-
-    idea.updates.push(req.body.update);
-
-    fs.writeFileSync("data.json", JSON.stringify(ideas, null, 2));
-
-    res.json({ message: "Update added" });
-});
-
-// =============================
-// 🔍 SEARCH
-// =============================
-app.get("/search", (req, res) => {
-    const q = req.query.q.toLowerCase();
-
-    const filtered = ideas.filter(i =>
-        i.title.toLowerCase().includes(q)
-    );
-
-    res.json(filtered);
+    res.json({ message: "Liked" });
 });
 
 // =============================
 // 🚀 START SERVER
 // =============================
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log (`Server running on port ${PORT}`);
 });
