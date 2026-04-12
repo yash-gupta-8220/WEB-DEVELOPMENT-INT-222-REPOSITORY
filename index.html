@@ -361,6 +361,16 @@ form-box {
   background: red !important;
   color: white;
 }
+ .new-btn {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    padding: 10px 15px;
+    background: orange;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
 </style>
  
  <div id ="messageBox"></div>
@@ -368,6 +378,7 @@ form-box {
   <input type="text" placeholder="Write a suggestion..." class="comment-input" />
   <button class="comment-btn">Add</button>
   <button onclick="openMenu()">Domains</button>
+  <button onclick="openDomainForm()" class="new-btn">📂 Categorise Domains</button>
 </div>
     
   <div class="logo">💡 IdeaHub</div>
@@ -393,6 +404,23 @@ form-box {
 <body>
 
 <h1>💡 Idea Repository Platform</h1>
+ <div id="domainForm" class="collab-menu">
+    <div class="menu-box">
+
+        <h3>Select Domain</h3>
+
+        <label><input type="radio" name="domain" value="AI"> AI</label><br>
+        <label><input type="radio" name="domain" value="Python"> Python</label><br>
+        <label><input type="radio" name="domain" value="Web"> Web</label><br>
+        <label><input type="radio" name="domain" value="Cyber"> Cyber</label><br>
+        <label><input type="radio" name="domain" value="Education"> Education</label><br><br>
+
+        <button onclick="goToDomain()">Go</button>
+        <button onclick="closeDomainForm()">Close</button>
+
+    </div>
+</div>
+
  
 
 <div class="container">
@@ -511,6 +539,24 @@ function selectType(type) {
             window.location.href = "startup.html";
         }, 500);
     }
+}
+ function openDomainForm() {
+    document.getElementById("domainForm").style.display = "flex";
+}
+
+function closeDomainForm() {
+    document.getElementById("domainForm").style.display = "none";
+}
+
+function goToDomain() {
+    const selected = document.querySelector('input[name="domain"]:checked');
+
+    if (!selected) {
+        alert("Please select a domain");
+        return;
+    }
+
+    window.location.href = "domain.html?domain=" + selected.value;
 }
 
  
