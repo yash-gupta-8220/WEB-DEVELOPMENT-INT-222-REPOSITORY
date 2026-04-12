@@ -394,10 +394,14 @@ form-box {
   background: red !important;
   color: white;
 }
-.small-btn {
-    padding: 0px 2px;
-    font-size: 7px;
-    border-radius: 2px;
+small-btn {
+    padding: 1px 4px;
+    font-size: 9px;
+    border-radius: 3px;
+    display: inline-block;
+    width: auto;
+    line-height: 1;
+    white-space: nowrap;
 }
 
 </style>
@@ -460,7 +464,7 @@ form-box {
 
 
 <p id="status"></p>
- <button class="small-btn" onclick="checkStatus()">🟢 Check Server Status</button>
+<button type="button" class="small-btn" onclick="checkStatus()">🟢 Check Server Status</button>
 <script>
 async function addIdea() {
     const idea = {
