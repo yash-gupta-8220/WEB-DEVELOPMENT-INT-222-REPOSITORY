@@ -394,15 +394,7 @@ form-box {
   background: red !important;
   color: white;
 }
-small-btn {
-    padding: 1px 4px;
-    font-size: 9px;
-    border-radius: 3px;
-    display: inline-block;
-    width: auto;
-    line-height: 1;
-    white-space: nowrap;
-}
+
 
 </style>
  <div id ="messageBox"></div>
@@ -461,11 +453,7 @@ small-btn {
     <div id="list"></div>
 
 </div>
-
-
-<p id="status"></p>
-<button type="button" class="small-btn" onclick="checkStatus()">🟢 Check Server Status</button>
-<script>
+-<script>
 async function addIdea() {
     const idea = {
         title: document.getElementById("title").value,
@@ -503,13 +491,7 @@ async function loadIdeas() {
 }
 
 loadIdeas();
- async function checkStatus() {
-    const res = await fetch("/status");
-    const data = await res.json();
 
-    document.getElementById("status").innerText =
-        data.status + " at " + data.time;
- }
 
 
 function showMessage(text, color) {
@@ -574,6 +556,9 @@ function selectType(type) {
             window.location.href = "startup.html";
         }, 500);
     }
+}
+ function selectDomain(domain) {
+    window.location.href = "domain.html?domain=" + domain;
 }
  
  
