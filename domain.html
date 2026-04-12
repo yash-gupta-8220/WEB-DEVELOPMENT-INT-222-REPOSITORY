@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Domain Ideas</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        img {
+            width: 120px;
+            margin: 10px;
+        }
+
+        a {
+            color: #38bdf8;
+            display: block;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 id="heading"></h1>
+
+<div id="info"></div>
+
+<h2>Ideas</h2>
+<div id="list"></div>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const domain = urlParams.get("domain");
+
+// Heading
+document.getElementById("heading").innerText = domain + " Section";
+
+// 🔥 Domain Info (UPDATED)
+const domainData = {
+    AI: {
+        img: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png",
+        text: "AI is changing the future with automation and Machine Learning.",
+        links: ["https://openai.com", "https://towardsdatascience.com"]
+    },
+    Python: {
+        img: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+        text: "Python is used in AI, ML, Web Development and Data Science.",
+        links: ["https://python.org", "https://realpython.com"]
+    },
+    Web: {
+        img: "https://cdn-icons-png.flaticon.com/512/1006/1006363.png",
+        text: "Web development includes frontend and backend technologies.",
+        links: ["https://developer.mozilla.org", "https://w3schools.com"]
+    },
+    Cyber: {
+        img: "https://cdn-icons-png.flaticon.com/512/3064/3064197.png",
+        text: "Cybersecurity protects systems from hacking and attacks.",
+        links: ["https://owasp.org", "https://kaspersky.com"]
+    },
+    Education: {
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+        text: "Education domain focuses on learning platforms, online courses and knowledge sharing.",
+        links: ["https://coursera.org", "https://khanacademy.org", "https://edx.org"]
+    }
+};
+
+// Show info
+const infoDiv = document.getElementById("info");
+const d = domainData[domain];
+
+if (d) {
+    let html = `
+        <img src="${d.img}">
+        <p>${d.text}</p>
+    `;
+
+    d.links.forEach(link => {
+        html += <a href="${link}" target="_blank">${link}</a>;
+    });
+
+    infoDiv.innerHTML = html;
+} else {
+    infoDiv.innerHTML = "<p>No domain information available</p>";
+}
+
+// Fetch ideas
+async function loadIdeas() {
+    const res = await fetch("/ideas/" + domain);
+    const data = await res.json();
+
+    let html = "";
+
+    if (data.length === 0) {
+        html = "<p>No ideas found</p>";
+    }
+
+    data.forEach(i => {
+        html += `
+            <div class="card">
+                <h3>${i.title}</h3>
+                <p>${i.description}</p>
+            </div>
+        `;
+    });
+
+    document.getElementById("list").innerHTML = html;
+}
+
+loadIdeas();
+</script>
+
+</body>
+</html>
