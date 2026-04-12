@@ -28,6 +28,13 @@ app.get("/ideas", (req, res) => {
   res.json(ideas);
 });
 
+app.get("/status", (req, res) => {
+    res.json({
+        status: "Server is running",
+        time: new Date().toLocaleString()
+    });
+});
+
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
