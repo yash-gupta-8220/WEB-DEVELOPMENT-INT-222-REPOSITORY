@@ -34,6 +34,16 @@ app.get("/status", (req, res) => {
     });
 });
 
+app.get("/ideas/:domain", (req, res) => {
+    const domain = req.params.domain.toLowerCase();
+
+    const filteredIdeas = ideas.filter(i =>
+        i.domain.toLowerCase() === domain
+    );
+
+    res.json(filteredIdeas);
+});
+
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
