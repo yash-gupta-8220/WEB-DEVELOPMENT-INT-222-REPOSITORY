@@ -188,19 +188,6 @@ navbar {
   display: flex;
   gap: 20px;
 }
- .dropdown {
-    position: relative;
-}
-.dropdown-menu {
-    position: absolute;
-    top: 35px;
-    left: 0;
-    background: yellow;
-    border-radius: 10px;
-    padding: 8px;
-    z-index: 9999;
-    display: none;
-}
 
 .nav-right span {
   position: relative;
@@ -374,6 +361,48 @@ form-box {
   background: red !important;
   color: white;
 }
+ .my-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.drop-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    background: #38bdf8;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: black;
+}
+
+/* dropdown box */
+.my-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 35px;
+    left: 0;
+
+    background: white;
+    min-width: 140px;
+    border-radius: 8px;
+    padding: 5px;
+
+    z-index: 9999; /* 🔥 important */
+}
+
+/* items */
+.my-dropdown-content div {
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* hover effect */
+.my-dropdown-content div:hover {
+    background: #38bdf8;
+    color: white;
+}
 
 
 </style>
@@ -385,22 +414,21 @@ form-box {
 </div>
     
   <div class="logo">💡 IdeaHub</div>
-  <div class="nav-right">
-    <span onclick="setActive(this)">Ideas</span>
-    <span onclick="setActive(this)">Domains</span>
+ <div class="my-dropdown">
+    <button class="drop-btn" onclick="toggleDropdown()">🌐 Domain</button>
 
-    <!-- Domain Dropdown -->
-   <div class="dropdown">
-    <span onclick="toggleDropdown()">🌐 Domain</span>
-
-    <div id="menu" class="dropdown-menu">
-        <div onclick="selectDomain('Education')">📘 Education</div>
-        <div onclick="selectDomain('AI')">🤖 AI</div>
-        <div onclick="selectDomain('Web')">🌐 Web</div>
-        <div onclick="selectDomain('App')">📱 App</div>
-        <div onclick="selectDomain('Cyber')">🔐 Cyber</div>
+    <div id="myMenu" class="my-dropdown-content">
+        <div onclick="goToDomain('Education')">📚 Education</div>
+        <div onclick="goToDomain('AI')">🤖 AI</div>
+        <div onclick="goToDomain('Python')">🐍 Python</div>
+        <div onclick="goToDomain('Web')">🌐 Web</div>
+        <div onclick="goToDomain('Cyber')">🔐 Cyber</div>
     </div>
 </div>
+ 
+
+    <!-- Domain Dropdown -->
+  
    <div id="collabMenu" class="collab-menu">
   <div class="menu-box">
     <h3>Choose Domain Type</h3>
@@ -537,15 +565,19 @@ function selectType(type) {
         }, 500);
     }
 }
- function toggleDropdown() {
-    const menu = document.getElementById("dropdownmenu");
-    menu.style.display = (menu.style.display === "block") ? "none" : "block";
+function toggleDropdown() {
+    const menu = document.getElementById("myMenu");
+
+    if (menu.style.display === "block") {
+        menu.style.display = "none";
+    } else {
+        menu.style.display = "block";
+    }
 }
 
-function selectDomain(domain) {
+function goToDomain(domain) {
     window.location.href = "domain.html?domain=" + domain;
 }
- 
  
 </script>
 
