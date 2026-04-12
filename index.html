@@ -361,51 +361,6 @@ form-box {
   background: red !important;
   color: white;
 }
- .my-dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.drop-btn {
-    padding: 6px 12px;
-    font-size: 12px;
-    background: #38bdf8;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: black;
-}
-
-/* dropdown box */
-.my-dropdown-content {
-    display: none;
-    position: absolute;
-    top: 35px;
-    left: 0;
-
-    background: white;
-    min-width: 140px;
-    border-radius: 8px;
-    padding: 5px;
-
-    z-index: 9999; /* 🔥 important */
-}
-
-/* items */
-.my-dropdown-content div {
-    padding: 8px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-/* hover effect */
-.my-dropdown-content div:hover {
-    background: #38bdf8;
-    color: white;
-}
- 
-
-
 </style>
  <div class="my-dropdown">
     <button class="drop-btn" onclick="toggleDropdown()">🌐 Domain</button>
@@ -567,19 +522,7 @@ function selectType(type) {
         }, 500);
     }
 }
-function toggleDropdown() {
-    const menu = document.getElementById("myMenu");
 
-    if (menu.style.display === "block") {
-        menu.style.display = "none";
-    } else {
-        menu.style.display = "block";
-    }
-}
-
-function goToDomain(domain) {
-    window.location.href = "domain.html?domain=" + domain;
-}
  
 </script>
 
