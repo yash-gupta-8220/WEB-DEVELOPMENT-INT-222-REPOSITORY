@@ -407,13 +407,13 @@ form-box {
  <div class="extra-box">
   <input type="text" placeholder="Write a suggestion..." class="comment-input" />
   <button class="comment-btn">Add</button>
-  <button onclick="openMenu()">Collaborate</button>
+  <button onclick="openMenu()">Domains</button>
 </div>
     
   <div class="logo">💡 IdeaHub</div>
   <div class="nav-right">
     <span onclick="setActive(this)">Ideas</span>
-    <span onclick="setActive(this)">Collaborate</span>
+    <span onclick="setActive(this)">Domains</span>
 
     <!-- Domain Dropdown -->
     <div class="dropdown">
@@ -429,7 +429,7 @@ form-box {
     </div>
    <div id="collabMenu" class="collab-menu">
   <div class="menu-box">
-    <h3>Choose Collaboration Type</h3>
+    <h3>Choose Domain Type</h3>
 
     <button onclick="selectType('idea')">✍️ Add Idea</button>
     <button onclick="selectType('research')">📄 Research Journal</button>
@@ -463,9 +463,6 @@ form-box {
 
 <p id="status"></p>
  <button class="small-btn" onclick="checkStatus()">🟢 Check Server Status</button>
- <button onclick="getIdeasByDomain('AI')">AI Ideas</button>
-<button onclick="getIdeasByDomain('Python')">Python Ideas</button>
-
 <div id="filtered"></div>
   
 <script>
@@ -512,25 +509,7 @@ loadIdeas();
 
     document.getElementById("status").innerText =
         data.status + " at " + data.time;
-}
- 
- async function getIdeasByDomain(domain) {
-    const res = await fetch(/ideas/${domain});
-    const data = await res.json();
-
-    let html = "";
-    data.forEach(i => {
-        html += `
-        <div>
-            <h3>${i.title}</h3>
-            <p>${i.domain}</p>
-            <p>${i.description}</p>
-        </div>
-        `;
-    });
-
-    document.getElementById("filtered").innerHTML = html;
-}
+ }
 
 function showMessage(text, color) {
   const box = document.getElementById("messageBox");
