@@ -23,16 +23,8 @@ app.post("/add", (req, res) => {
 });
 
 
-
 app.get("/ideas", (req, res) => {
   res.json(ideas);
-});
-
-app.get("/status", (req, res) => {
-    res.json({
-        status: "Server is running",
-        time: new Date().toLocaleString()
-    });
 });
 
 
