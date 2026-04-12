@@ -463,16 +463,6 @@ form-box {
 
 <p id="status"></p>
  <button class="small-btn" onclick="checkStatus()">🟢 Check Server Status</button>
-<div id="filtered"></div>
- <select onchange="filterIdeas(this.value)">
-    <option value="">All Ideas</option>
-    <option value="AI">AI</option>
-    <option value="Python">Python</option>
-    <option value="Web">Web</option>
-</select>
-
-<div id="list"></div>
-  
 <script>
 async function addIdea() {
     const idea = {
@@ -518,32 +508,7 @@ loadIdeas();
     document.getElementById("status").innerText =
         data.status + " at " + data.time;
  }
- async function filterIdeas(domain) {
-    let url;
 
-    if (domain === "") {
-        url = "/ideas";
-    } else {
-        url = `/ideas/${domain}`;
-    }
-
-    const res = await fetch(url);
-    const data = await res.json();
-
-    let html = "";
-
-    data.forEach(i => {
-        html += `
-        <div class="idea-card">
-            <h3>${i.title}</h3>
-            <p>${i.domain}</p>
-            <p>${i.description}</p>
-        </div>
-        `;
-    });
-
-    document.getElementById("list").innerHTML = html;
-}
 
 function showMessage(text, color) {
   const box = document.getElementById("messageBox");
