@@ -27,6 +27,16 @@ app.get("/ideas", (req, res) => {
   res.json(ideas);
 });
 
+app.get("/ideas/:domain", (req, res) => {
+    const domain = req.params.domain.toLowerCase();
+
+    const filtered = ideas.filter(i =>
+        i.domain.toLowerCase() === domain
+    );
+
+    res.json(filtered);
+});
+
 app.get("/status", (req, res) => {
     res.json({
         status: "Server is running",
