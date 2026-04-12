@@ -394,6 +394,12 @@ form-box {
   background: red !important;
   color: white;
 }
+ .small-btn {
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 5px;
+    width: fit-content;
+}
 
 </style>
  <div id ="messageBox"></div>
@@ -455,6 +461,8 @@ form-box {
  <button onclick="checkStatus()">🟢 Check Server Status</button>
 
 <p id="status"></p>
+ <button class="small-btn" onclick="checkStatus()">🟢 Check Server Status</button>
+  
 <script>
 async function addIdea() {
     const idea = {
