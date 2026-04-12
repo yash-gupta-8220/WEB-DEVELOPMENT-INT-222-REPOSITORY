@@ -452,6 +452,9 @@ form-box {
     <div id="list"></div>
 
 </div>
+ <button onclick="checkStatus()">🟢 Check Server Status</button>
+
+<p id="status"></p>
 <script>
 async function addIdea() {
     const idea = {
@@ -490,6 +493,13 @@ async function loadIdeas() {
 }
 
 loadIdeas();
+ async function checkStatus() {
+    const res = await fetch("/status");
+    const data = await res.json();
+
+    document.getElementById("status").innerText =
+        data.status + " at " + data.time;
+}
 
 function showMessage(text, color) {
   const box = document.getElementById("messageBox");
