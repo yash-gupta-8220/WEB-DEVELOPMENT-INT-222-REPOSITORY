@@ -462,6 +462,10 @@ form-box {
 
 <p id="status"></p>
  <button class="small-btn" onclick="checkStatus()">🟢 Check Server Status</button>
+ <button onclick="getIdeasByDomain('AI')">AI Ideas</button>
+<button onclick="getIdeasByDomain('Python')">Python Ideas</button>
+
+<div id="filtered"></div>
   
 <script>
 async function addIdea() {
@@ -507,6 +511,24 @@ loadIdeas();
 
     document.getElementById("status").innerText =
         data.status + " at " + data.time;
+}
+ 
+ async function getIdeasByDomain(domain) {
+    const res = await fetch(/ideas/${domain});
+    const data = await res.json();
+
+    let html = "";
+    data.forEach(i => {
+        html += `
+        <div>
+            <h3>${i.title}</h3>
+            <p>${i.domain}</p>
+            <p>${i.description}</p>
+        </div>
+        `;
+    });
+
+    document.getElementById("filtered").innerHTML = html;
 }
 
 function showMessage(text, color) {
