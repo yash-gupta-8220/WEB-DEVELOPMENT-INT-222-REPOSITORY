@@ -361,40 +361,20 @@ form-box {
   background: red !important;
   color: white;
 }
- .new-btn {
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    padding: 10px 15px;
-    background: orange;
-    border: none;
+ domain-box {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 8px;
+    background: #38bdf8;
     border-radius: 8px;
     cursor: pointer;
-}
-
-/* Hidden by default */
-.domain-line {
-    display: none;
-    position: fixed;
-    top: 130px;
-    right: 20px;
-    background: rgba(0,0,0,0.7);
-    padding: 10px;
-    border-radius: 10px;
-}
-
-/* Each option */
-.domain-line div {
     color: white;
-    padding: 8px 12px;
-    cursor: pointer;
 }
 
-/* Hover effect */
-.domain-line div:hover {
-    background: #38bdf8;
+.domain-box:hover {
+    background: #0ea5e9;
 }
-
+ 
 </style>
  
  <div id ="messageBox"></div>
@@ -428,19 +408,18 @@ form-box {
 <body>
 
 <h1>💡 Idea Repository Platform</h1>
- <!-- ✅ Button -->
-<button onclick="toggleDomains()" class="new-btn">📂 Categorise Domains</button>
 
-<!-- ✅ Domain Options -->
-<div class="domain-line" id="domainLine">
-    <div onclick="goToDomain('AI')">AI</div>
-    <div onclick="goToDomain('Python')">Python</div>
-    <div onclick="goToDomain('Web')">Web</div>
-    <div onclick="goToDomain('Cyber')">Cyber</div>
-    <div onclick="goToDomain('Education')">Education</div>
+<h2 style="color:white;">📂 Categorise Domains</h2>
+
+<div style="margin-top:30px;">
+
+    <div class="domain-box" onclick="goToDomain('AI')">AI</div>
+    <div class="domain-box" onclick="goToDomain('Python')">Python</div>
+    <div class="domain-box" onclick="goToDomain('Web')">Web</div>
+    <div class="domain-box" onclick="goToDomain('Cyber')">Cyber</div>
+    <div class="domain-box" onclick="goToDomain('Education')">Education</div>
+
 </div>
-
- 
 
 <div class="container">
 
@@ -559,21 +538,9 @@ function selectType(type) {
         }, 500);
     }
 }
-function toggleDomain() {
-    const box = document.getElementById("domainLine");
-
-    if (box.style.display === "block") {
-        box.style.display = "none";
-    } else {
-        box.style.display = "block";
-    }
-}
-
 function goToDomain(domain) {
     window.location.href = "domain.html?domain=" + domain;
 }
-
- 
 </script>
 
 </body>
