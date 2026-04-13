@@ -363,22 +363,23 @@ form-box {
   color: white;
 }
 .domain-box {
-    display: inline-block;
-    padding: 12px 25px;
-    margin: 10px;
-    background: linear-gradient(45deg, #38bdf8, #0ea5e9);
-    border-radius: 10px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-
-    transition: 0.3s;
+    display: inline-block !important;
+    padding: 12px 25px !important;
+    margin: 10px !important;
+    background: linear-gradient(45deg, #38bdf8, #0ea5e9) !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    color: white !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    z-index: 999 !important;
+    position: relative !important;
 }
 
+/* Hover effect */
 .domain-box:hover {
     transform: scale(1.1);
-    background: #0284c7;
+    background: #0284c7 !important;
 }
  
 </style>
@@ -417,7 +418,7 @@ form-box {
 
 <h2 style="color:white;">📂 Categorise Domains</h2>
 
-<div style="margin-top:30px;">
+<div style="margin-top:30px; text-align:center; position: relative; z-index: 10;">
 
     <div class="domain-box" onclick="goToDomain('AI')">AI</div>
     <div class="domain-box" onclick="goToDomain('Python')">Python</div>
