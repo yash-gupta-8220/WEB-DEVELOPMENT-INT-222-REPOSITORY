@@ -27,12 +27,10 @@ app.get("/ideas", (req, res) => {
   res.json(ideas);
 });
 
-app.get("/ideas/:domain", (req, res) => {
-    const domain = req.params.domain.toLowerCase();
+app.get("/getIdeas/:domain", (req, res) => {
+    const domain = req.params.domain;
 
-    const filtered = ideas.filter(i =>
-        i.domain.toLowerCase() === domain
-    );
+    const filtered = ideas.filter(i => i.domain === domain);
 
     res.json(filtered);
 });
