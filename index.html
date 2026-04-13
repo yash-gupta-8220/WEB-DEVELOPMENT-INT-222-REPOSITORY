@@ -429,19 +429,15 @@ form-box {
 
 <h1>💡 Idea Repository Platform</h1>
  <!-- ✅ Button -->
-<button onclick="toggleDomains()" class="new-btn">
-📂 Categorise Domains
-</button>
+<button onclick="toggleDomains()" class="new-btn">📂 Categorise Domains</button>
 
 <!-- ✅ Domain Options -->
-<div id="domainLine" class="domain-line">
-
-    <div onclick="goToDomain('AI')">🤖 AI</div>
-    <div onclick="goToDomain('Python')">🐍 Python</div>
-    <div onclick="goToDomain('Web')">🌐 Web</div>
-    <div onclick="goToDomain('Cyber')">🔐 Cyber</div>
-    <div onclick="goToDomain('Education')">📚 Education</div>
-
+<div class="domain-line" id="domainLine">
+    <div onclick="goToDomain('AI')">AI</div>
+    <div onclick="goToDomain('Python')">Python</div>
+    <div onclick="goToDomain('Web')">Web</div>
+    <div onclick="goToDomain('Cyber')">Cyber</div>
+    <div onclick="goToDomain('Education')">Education</div>
 </div>
 
  
@@ -563,7 +559,7 @@ function selectType(type) {
         }, 500);
     }
 }
- function toggleDomains() {
+function toggleDomain() {
     const box = document.getElementById("domainLine");
 
     if (box.style.display === "block") {
