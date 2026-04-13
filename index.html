@@ -363,23 +363,23 @@ form-box {
   color: white;
 }
 .domain-box {
-    display: inline-block !important;
-    padding: 12px 25px !important;
-    margin: 10px !important;
-    background: linear-gradient(45deg, #38bdf8, #0ea5e9) !important;
-    border-radius: 10px !important;
-    cursor: pointer !important;
-    color: white !important;
-    font-weight: bold !important;
-    text-align: center !important;
-    z-index: 999 !important;
-    position: relative !important;
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px;
+    background: #1e293b;          /* dark background */
+    color: #00ff88;               /* 🔥 GREEN TEXT */
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    border: 1px solid #00ff88;
+    text-shadow: 0 0 8px #00ff88; /* glow effect */
 }
 
-/* Hover effect */
 .domain-box:hover {
+    background: #00ff88;
+    color: black;
     transform: scale(1.1);
-    background: #0284c7 !important;
 }
  
 </style>
