@@ -1,154 +1,205 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Domain Page</title>
+    <title>Domain Ideas</title>
 
     <style>
         body {
-            font-family: Arial;
-            background: #020617;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
             color: white;
             text-align: center;
         }
 
         h1 {
-            margin-top: 30px;
+            margin-top: 20px;
+            font-size: 36px;
+            color: #38bdf8;
         }
 
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 30px;
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 30px;
         }
 
+        /* Card */
         .card {
-            width: 250px;
-            background: #1e293b;
-            margin: 15px;
-            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 15px;
             overflow: hidden;
-            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            transition: 0.4s;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
         }
 
         .card:hover {
-            transform: scale(1.05);
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 0 25px #38bdf8;
         }
 
         .card img {
             width: 100%;
-            height: 150px;
+            height: 180px;
             object-fit: cover;
         }
 
-        .card h3 {
-            margin: 10px;
+        .card-content {
+            padding: 15px;
         }
 
-        .card a {
+        .card h3 {
+            margin: 10px 0;
+        }
+
+        .card p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .btn {
             display: inline-block;
-            margin: 10px;
+            margin-top: 10px;
             padding: 8px 12px;
             background: #38bdf8;
-            color: black;
+            color: white;
+            border-radius: 6px;
             text-decoration: none;
-            border-radius: 5px;
+            font-size: 13px;
         }
 
-        button {
-            margin-top: 20px;
+        .btn:hover {
+            background: #0284c7;
+        }
+
+        .back-btn {
+            margin: 15px;
             padding: 10px 20px;
-            background: orange;
             border: none;
-            border-radius: 6px;
+            background: orange;
+            color: white;
+            border-radius: 8px;
             cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: darkorange;
         }
     </style>
 </head>
 
 <body>
 
-<h1 id="domainTitle"></h1>
+<h1 id="domainTitle">Domain Ideas</h1>
 
-<div class="container" id="content"></div>
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
 
-<button onclick="goBack()">⬅ Back</button>
+<div class="grid" id="content"></div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const domain = params.get("domain");
+    const params = new URLSearchParams(window.location.search);
+    const domain = params.get("domain");
 
-document.getElementById("domainTitle").innerText = "📂 " + domain + " Domain";
+    document.getElementById("domainTitle").innerText = domain + " Ideas";
 
-// Sample content for domains
-const data = {
-    AI: [
-        {
-            title: "AI Basics",
-            img: "https://source.unsplash.com/300x200/?ai",
-            link: "https://en.wikipedia.org/wiki/Artificial_intelligence"
-        },
-        {
-            title: "Machine Learning",
-            img: "https://source.unsplash.com/300x200/?machine-learning",
-            link: "https://www.ibm.com/topics/machine-learning"
-        }
-    ],
+    const content = document.getElementById("content");
 
-    Web: [
-        {
-            title: "HTML Guide",
-            img: "https://source.unsplash.com/300x200/?html",
-            link: "https://developer.mozilla.org/en-US/docs/Web/HTML"
-        },
-        {
-            title: "CSS Tricks",
-            img: "https://source.unsplash.com/300x200/?css",
-            link: "https://css-tricks.com/"
-        }
-    ],
+    const ideas = {
+        AI: [
+            {
+                title: "AI Chatbot",
+                img: "https://images.unsplash.com/photo-1677442136019-21780ecad995",
+                desc: "Smart chatbot for answering questions",
+                link: "https://en.wikipedia.org/wiki/Chatbot"
+            },
+            {
+                title: "Face Detection",
+                img: "https://images.unsplash.com/photo-1581090700227-1e8c4a36f0d4",
+                desc: "Detect faces using AI models",
+                link: "https://en.wikipedia.org/wiki/Facial_recognition_system"
+            }
+        ],
+        Python: [
+            {
+                title: "Automation Tool",
+                img: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
+                desc: "Automate daily tasks using Python",
+                link: "https://realpython.com/"
+            },
+            {
+                title: "Web Scraper",
+                img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+                desc: "Extract data from websites",
+                link: "https://beautiful-soup-4.readthedocs.io/"
+            }
+        ],
+        Web: [
+            {
+                title: "Portfolio Website",
+                img: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
+                desc: "Show your projects online",
+                link: "https://developer.mozilla.org/"
+            },
+            {
+                title: "Blog Platform",
+                img: "https://images.unsplash.com/photo-1499750310107-5fef28a66643",
+                desc: "Write and share blogs",
+                link: "https://medium.com/"
+            }
+        ],
+        Cyber: [
+            {
+                title: "Password Checker",
+                img: "https://images.unsplash.com/photo-1555949963-aa79dcee981c",
+                desc: "Check password strength",
+                link: "https://owasp.org/"
+            },
+            {
+                title: "Encryption Tool",
+                img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b",
+                desc: "Secure data using encryption",
+                link: "https://en.wikipedia.org/wiki/Encryption"
+            }
+        ],
+        Education: [
+            {
+                title: "Learning App",
+                img: "https://images.unsplash.com/photo-1584697964403-1c4b7b2b7b5c",
+                desc: "Online education platform",
+                link: "https://coursera.org"
+            },
+            {
+                title: "Quiz System",
+                img: "https://images.unsplash.com/photo-1588072432836-e10032774350",
+                desc: "Practice MCQs online",
+                link: "https://quizizz.com"
+            }
+        ]
+    };
 
-    Python: [
-        {
-            title: "Python Docs",
-            img: "https://source.unsplash.com/300x200/?python",
-            link: "https://docs.python.org/3/"
-        }
-    ],
+    if (ideas[domain]) {
+        ideas[domain].forEach(item => {
+            content.innerHTML += `
+                <div class="card">
+                    <img src="${item.img}">
+                    <div class="card-content">
+                        <h3>${item.title}</h3>
+                        <p>${item.desc}</p>
+                        <a href="${item.link}" target="_blank" class="btn">Read More</a>
+                    </div>
+                </div>
+            `;
+        });
+    } else {
+        content.innerHTML = "<p>No ideas found</p>";
+    }
 
-    Cyber: [
-        {
-            title: "Cyber Security",
-            img: "https://source.unsplash.com/300x200/?cyber-security",
-            link: "https://www.kaspersky.com/resource-center"
-        }
-    ],
-
-    Education: [
-        {
-            title: "Online Learning",
-            img: "https://source.unsplash.com/300x200/?education",
-            link: "https://www.coursera.org/"
-        }
-    ]
-};
-
-// Display cards
-const container = document.getElementById("content");
-
-data[domain].forEach(item => {
-    container.innerHTML += `
-        <div class="card">
-            <img src="${item.img}">
-            <h3>${item.title}</h3>
-            <a href="${item.link}" target="_blank">Visit</a>
-        </div>
-    `;
-});
-
-function goBack() {
-    window.location.href = "index.html";
-}
+    function goBack() {
+        window.history.back();
+    }
 </script>
 
 </body>
