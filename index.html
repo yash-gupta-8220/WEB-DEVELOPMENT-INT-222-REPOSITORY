@@ -461,6 +461,11 @@ Logout
 
 </div>
 -<script>
+  if (!localStorage.getItem("loggedIn")) {
+    window.location.href = "login.html";
+}
+
+ 
 async function addIdea() {
     const idea = {
         title: document.getElementById("title").value,
@@ -534,9 +539,6 @@ document.querySelector(".collab-btn").addEventListener("click", () => {
 
 function closeMenu() {
   document.getElementById("collabMenu").style.display = "none";
-}
- if (!localStorage.getItem("loggedIn")) {
-    window.location.href = "login.html";
 }
 
 function selectType(type) {
