@@ -7,36 +7,23 @@
 
 <h2>Login</h2>
 
-<input id="username" placeholder="Username"><br><br>
-<input id="password" type="password" placeholder="Password"><br><br>
+<input type="text" id="username" placeholder="Username"><br><br>
+<input type="password" id="password" placeholder="Password"><br><br>
 
-<button onclick="login()">Login</button>
-
-<p id="msg"></p>
+<button type="button" onclick="loginUser()">Login</button>
 
 <script>
-async function login() {
+function loginUser() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const res = await fetch("https://YOUR-APP.onrender.com/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username, password })
-    });
-
-    const data = await res.json();
-
-    if (res.status === 200) {
+    if (username === "admin" && password === "1234") {
         localStorage.setItem("loggedIn", "true");
         window.location.href = "index.html";
     } else {
-        document.getElementById("msg").innerText = data.message;
+        alert("Wrong username or password");
     }
 }
 </script>
 
 </body>
-</html>
