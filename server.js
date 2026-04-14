@@ -5,6 +5,17 @@ const app = express();
 app.use(express.json());
 app.use(express.static(__dirname)); // serve frontend
 
+// 🔐 ADD LOGIN HERE
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+
+    if (username === "admin" && password === "1234") {
+        res.json({ message: "Login successful" });
+    } else {
+        res.status(401).json({ message: "Invalid credentials" });
+    }
+});
+
 
 let ideas = [];
 
