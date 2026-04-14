@@ -396,6 +396,19 @@ form-box {
   <input type="text" placeholder="Write a suggestion..." class="comment-input" />
   <button class="comment-btn">Add</button>
   <button onclick="openMenu()">Domains</button>
+  <button onclick="logout()" style="
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ef4444;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+">
+Logout
+</button>
 
 </div>
     
@@ -522,6 +535,9 @@ document.querySelector(".collab-btn").addEventListener("click", () => {
 function closeMenu() {
   document.getElementById("collabMenu").style.display = "none";
 }
+ if (!localStorage.getItem("loggedIn")) {
+    window.location.href = "login.html";
+}
 
 function selectType(type) {
     closeMenu();
@@ -553,6 +569,12 @@ function selectType(type) {
 }
 function goToDomain(domain) {
     window.location.href = "domain.html?domain=" + domain;
+}
+
+/* 🔐 ADD THIS BELOW */
+function logout() {
+    localStorage.removeItem("loggedIn");
+    window.location.href = "login.html";
 }
 </script>
 
