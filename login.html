@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body style="text-align:center; margin-top:100px; font-family:sans-serif;">
+
+<h2>Login</h2>
+
+<input id="username" placeholder="Username"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+
+<script>
+async function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const res = await fetch("https://YOUR-APP.onrender.com/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+
+    if (res.status === 200) {
+        localStorage.setItem("loggedIn", "true");
+        window.location.href = "index.html";
+    } else {
+        document.getElementById("msg").innerText = data.message;
+    }
+}
+</script>
+
+</body>
+</html>
