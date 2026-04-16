@@ -273,7 +273,7 @@ async function addResearch() {
 
   const data = { title, field, desc };
 
-  await fetch("https://web-development-int-222-repository.onrender.com/add", {
+  await fetch("https://web-development-int-222-repository-xyq3.onrender.com/add", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -285,7 +285,7 @@ async function addResearch() {
 }
   
   async function loadResearch() {
-  const res = await fetch("https://web-development-int-222-repository.onrender.com/ideas");
+  const res = await fetch("https://web-development-int-222-repository-xyq3.onrender.com/ideas")
   const data = await res.json();
 
   researches = data;
